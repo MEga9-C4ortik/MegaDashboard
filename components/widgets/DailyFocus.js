@@ -12,6 +12,13 @@ function DailyFocus() {
                     value={dailyFocus}
                     onChange={e => setDailyFocus(e.target.value)}
                     onBlur={() => setIsEditing(false)}
+                    onKeyDown={(e) => {
+                        if(e.key === 'Enter')
+                            setIsEditing(false);
+                        e.preventDefault();
+                        }
+                    }
+                    autoFocus={true}
                 />
                 : <p onClick={() => setIsEditing(true)}>
                     {dailyFocus || "Click to set your daily focus..."}
