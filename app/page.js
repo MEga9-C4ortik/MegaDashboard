@@ -13,9 +13,19 @@ export default function Home() {
 
     return (
         <>
-            <div className="date">
-                {now.toLocaleDateString("en-US")}{" "}
-                {now.toLocaleTimeString("en-US")}
+            <div className="time">
+                {now.toLocaleDateString("en-US", {
+                    weekday: "short",   // "Sat"
+                    month: "long",      // "May"
+                    day: "numeric",     // "17"
+                    year: "numeric"     // "2026"
+                }).replaceAll(","," ")}{" | "}
+                {now.toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    hour12: false
+                })}
             </div>
 
             <div className="daily-focus">
