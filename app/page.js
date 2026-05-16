@@ -9,7 +9,7 @@ export default function Home() {
             </div>
 
             <div className="daily-focus">
-
+                <DailyFocus />
             </div>
         </>
     )
