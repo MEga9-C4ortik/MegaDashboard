@@ -1,9 +1,18 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function DailyFocus() {
     const [dailyFocus, setDailyFocus] = useState("");
     const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        const saved = localStorage.getItem('dailyFocus');
+        if (saved) setDailyFocus(saved);
+    }, []);
+
+    const handleSave = () => {
+        localStorage.setItem('dailyFocus', dailyFocus);
+    };
 
     return(
         <div>
@@ -11,12 +20,18 @@ function DailyFocus() {
                 <input
                     value={dailyFocus}
                     onChange={e => setDailyFocus(e.target.value)}
-                    onBlur={() => setIsEditing(false)}
+                    onBlur={() => {
+                        setIsEditing(false);
+                        handleSave();
+                    }
+                    }
                     onKeyDown={(e) => {
-                        if(e.key === 'Enter')
+                        if(e.key === 'Enter') {
                             setIsEditing(false);
-                        e.preventDefault();
+                            e.preventDefault();
+                            handleSave();
                         }
+                    }
                     }
                     autoFocus={true}
                 />
