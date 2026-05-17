@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import {useState, useEffect} from "react";
-import DailyFocus from "../components/widgets/DailyFocus";
+import {useState, useEffect} from 'react';
+import DailyFocus from '../components/widgets/DailyFocus';
 
 export default function Home() {
     const [now, setNow] = useState(new Date());
@@ -12,14 +12,14 @@ export default function Home() {
     }, []);
 
     return (
-        <>
-            <div className="time">
+        <main className="min-h-screen bg-neutral-950 text-white p-8 flex flex-col gap-6">
+            <div className="text-sm text-neutral-400 tracking-widest uppercase">
                 {now.toLocaleDateString("en-US", {
                     weekday: "short",
                     month: "long",
                     day: "numeric",
                     year: "numeric"
-                }).replaceAll(","," ")}{" | "}
+                }).replaceAll(",", " ")}{" "}
                 {now.toLocaleTimeString("en-US", {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -28,9 +28,7 @@ export default function Home() {
                 })}
             </div>
 
-            <div className="daily-focus">
-                <DailyFocus />
-            </div>
-        </>
+            <DailyFocus />
+        </main>
     )
 }
