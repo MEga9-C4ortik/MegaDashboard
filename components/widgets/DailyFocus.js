@@ -18,7 +18,7 @@ function DailyFocus() {
         <div>
             {isEditing?
                 <input
-                    className="text-3xl font-semibold bg-transparent border-b border-neutral-500 outline-none text-white w-full"
+                    className="text-xl font-semibold bg-transparent border-b border-neutral-500 outline-none text-white w-full"
                     value={dailyFocus}
                     onChange={e => setDailyFocus(e.target.value)}
                     onBlur={() => {
@@ -36,7 +36,7 @@ function DailyFocus() {
                     }
                     autoFocus={true}
                 />
-                : <p className={"text-3xl font-semibold text-white cursor-pointer hover:text-neutral-300 transition-colors"}
+                : <p className={"text-2xl font-semibold text-white cursor-pointer hover:text-gray-400 transition-colors"}
                     onClick={() => setIsEditing(true)
                     }>
                     {dailyFocus ||

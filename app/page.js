@@ -12,20 +12,24 @@ export default function Home() {
     }, []);
 
     return (
-        <main className="min-h-screen bg-neutral-950 text-white p-8 flex flex-col gap-6">
-            <div className="text-sm text-neutral-400 tracking-widest uppercase">
-                {now.toLocaleDateString("en-US", {
-                    weekday: "short",
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric"
-                }).replaceAll(",", " ")}{" "}
-                {now.toLocaleTimeString("en-US", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                    hour12: false
-                })}
+        <main className="min-h-screen bg-neutral-900 text-white p-8 flex flex-col gap-4">
+            <div className="text-sm text-neutral-100 tracking-widest uppercase">
+                <div>
+                    {now.toLocaleDateString("en-US", {
+                        weekday: "short",
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric"
+                    }).replaceAll(",", " ")}{" "}
+                </div>
+                <div>{now.toLocaleTimeString("en-US", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                        hour12: false
+                        })
+                    }
+                </div>
             </div>
 
             <DailyFocus />
