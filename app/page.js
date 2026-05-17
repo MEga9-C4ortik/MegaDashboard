@@ -15,10 +15,10 @@ export default function Home() {
         <>
             <div className="time">
                 {now.toLocaleDateString("en-US", {
-                    weekday: "short",   // "Sat"
-                    month: "long",      // "May"
-                    day: "numeric",     // "17"
-                    year: "numeric"     // "2026"
+                    weekday: "short",
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric"
                 }).replaceAll(","," ")}{" | "}
                 {now.toLocaleTimeString("en-US", {
                     hour: "2-digit",
