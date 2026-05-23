@@ -1,11 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../lib/generated/prisma"
 }
 
 datasource db {
@@ -17,6 +11,6 @@ model Habit {
   id          String   @id @default(cuid())
   label       String
   streak      Int      @default(0)
-  lastChecked String?  // дата "YYYY-MM-DD" или null
+  lastChecked String?
   createdAt   DateTime @default(now())
 }
