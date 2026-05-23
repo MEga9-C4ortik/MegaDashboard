@@ -2,6 +2,7 @@
 
 import {useState, useEffect} from 'react';
 import DailyFocus from '../components/widgets/DailyFocus';
+import Habits from '../components/widgets/HabitTracker';
 
 export default function Home() {
     const [now, setNow] = useState(new Date());
@@ -33,6 +34,7 @@ export default function Home() {
             </div>
 
             <DailyFocus />
+            <Habits />
         </main>
     )
 }

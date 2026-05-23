@@ -21,9 +21,10 @@ function HabitTracker() {
                 <div key={habit.id} className="habit">
                     <input className={""}
                            type={"checkbox"}
-                           value={habit.name}
                            onChange={()=> toggleHabit(habit)}
                            checked={habit.done}/>
+                    <span> {habit.name} </span>
+                    <span> {habit.streak} </span>
                 </div>
                 ))
             }
