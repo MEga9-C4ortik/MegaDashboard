@@ -4,7 +4,10 @@ import {useState} from "react";
 
 function HabitTracker() {
     const today = new Date().toISOString().split('T')[0];
-    const [habits, setHabits] = useState([]);
+    const [habits, setHabits] = useState([
+        { id: '1', name: 'Stretching', streak: 0, done: false, lastDate: null },
+        { id: '2', name: 'Reading',    streak: 0, done: false, lastDate: null },
+    ]);
 
     const toggleHabit = (habit) => {
         if(lastDate === today) {
