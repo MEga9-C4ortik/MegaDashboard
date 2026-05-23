@@ -10,8 +10,18 @@ function HabitTracker() {
     ]);
 
     const toggleHabit = (habit) => {
-        if(lastDate === today) {
-
+        const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+        if(habit.lastDate === today) {
+            habit.done = false;
+            habit.streak--;
+        } else if (habit.lastDate === yesterday) {
+            habit.done = true;
+            habit.lastDate = today;
+            habit.streak++;
+        } else {
+            habit.done = true;
+            habit.lastDate = today;
+            habit.streak++;
         }
     }
 
