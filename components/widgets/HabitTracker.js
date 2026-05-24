@@ -4,6 +4,7 @@ import {useEffect, useState, useRef} from "react";
 function HabitTracker() {
     const today = new Date().toISOString().split('T')[0];
     const [contextMenu, setContextMenu] = useState(null);
+    const [isAdding, setIsAdding] = useState(false);
     const [habits, setHabits] = useState([
         { id: '1', name: 'Stretching', streak: 0, done: false, lastDate: null, isEditing: false },
         { id: '2', name: 'Reading',    streak: 0, done: false, lastDate: null, isEditing: false },
@@ -38,9 +39,18 @@ function HabitTracker() {
         }));
     }
 
-    const addHabit = (habit) => {
-
-    }
+    const addHabit = (name) => {
+        if (!name.trim()) return;
+        setHabits([...habits, {
+            id: crypto.randomUUID(),
+            name: name,
+            streak: 0,
+            done: false,
+            lastDate: null,
+            isEditing: false
+        }]);
+        setIsAdding(false);
+    };
 
     const deleteHabit = (habitId) => {
         setHabits(habits => habits.filter(h => h.id !== habitId));
@@ -90,7 +100,7 @@ function HabitTracker() {
                            checked={habit.done}/>
                     {habit.isEditing ? (
                         <input
-                            value={habit.name}
+                            value={ habit.name }
                             onChange={(e) => {
                                 setHabits(habits.map(h =>
                                     h.id === habit.id ? {...h, name: e.target.value} : h
@@ -112,12 +122,30 @@ function HabitTracker() {
                             autoFocus={true}
                         />
                     ) : (
-                        <span onClick={() => toggleHabit(habit)}>{habit.name}</span>
+                        <span onClick={() => toggleHabit(habit)}>{ habit.name }</span>
                     )}
-
+                    <span>
+                        { habit.streak }
+                    </span>
                 </div>
             ))
             }
+
+            {isAdding ? (
+                <input
+                    onBlur={(e) => {
+                        addHabit(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                        if(e.key === "Enter") addHabit(e.target.value);
+                        else if (e.key === "Escape") setIsAdding(false);
+                    }}
+                    autoFocus={true}
+                    placeholder={"Habit name ..."}
+                />
+            ) : (
+                <button onClick={() => setIsAdding(true)}>+ Add habit</button>
+            )}
 
             {contextMenu && (
                 <div style={{
