@@ -11,18 +11,30 @@ function HabitTracker() {
 
     const toggleHabit = (habit) => {
         const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-        if(habit.lastDate === today) {
-            habit.done = false;
-            habit.streak--;
-        } else if (habit.lastDate === yesterday) {
-            habit.done = true;
-            habit.lastDate = today;
-            habit.streak++;
-        } else {
-            habit.done = true;
-            habit.lastDate = today;
-            habit.streak++;
-        }
+
+        setHabits(habits.map(h => {
+            if(h.id !== habit.id) {return h;}
+
+            if (habit.lastDate === today) {
+                return { ...h,
+                    lastDate: yesterday,
+                    done: false,
+                    streak: h.streak-1
+                }
+            } else if (habit.lastDate === yesterday) {
+                return { ...h,
+                    lastDate: today,
+                    done: true,
+                    streak: h.streak+1
+                }
+            } else {
+                return { ...h,
+                    lastDate: today,
+                    done: true,
+                    streak: 1
+                }
+            }
+        }));
     }
 
     return (
@@ -36,7 +48,7 @@ function HabitTracker() {
                     <span> {habit.name} </span>
                     <span> {habit.streak} </span>
                 </div>
-                ))
+            ))
             }
         </div>
     )
