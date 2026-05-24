@@ -5,8 +5,8 @@ function HabitTracker() {
     const today = new Date().toISOString().split('T')[0];
     const [contextMenu, setContextMenu] = useState(null);
     const [habits, setHabits] = useState([
-        { id: '1', name: 'Stretching', streak: 0, done: false, lastDate: null },
-        { id: '2', name: 'Reading',    streak: 0, done: false, lastDate: null },
+        { id: '1', name: 'Stretching', streak: 0, done: false, lastDate: null, isEditing: false },
+        { id: '2', name: 'Reading',    streak: 0, done: false, lastDate: null, isEditing: false },
     ]);
 
     //habit
@@ -96,15 +96,31 @@ function HabitTracker() {
                 </div>
             ))
             }
+
             {contextMenu && (
                 <div style={{
                     position: 'fixed',
                     top: contextMenu.y,
                     left: contextMenu.x
                 }}>
-                    <button onClick={() => {/* edit */}}>Edit</button>
-                    <button onClick={() => {/* delete */}}>Delete</button>
+                    <button onClick={() =>{
+                        setHabits(habits.map(h =>
+                            h.id === contextMenu.habitId ? {...h, isEditing: true} : h));
+                        setContextMenu(null);
+                    }}>Edit</button>
+                    <button onClick={() => {Delete}}>Delete</button>
                 </div>
+            )}
+
+            {habit.isEditing ? (
+                <input
+                    value={habit.name}
+                    onChange={...}   // что должно происходить при вводе?
+                    onBlur={...}     // что происходит когда инпут теряет фокус?
+                    autoFocus
+                />
+            ) : (
+                <span>{habit.name}</span>
             )}
         </div>
     )
