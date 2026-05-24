@@ -18,11 +18,11 @@ function HabitTracker() {
 
         let newStreak, newLastChecked, newDone;
 
-        if (habit.lastDate === today) {
+        if (habit.lastChecked === today) {
             newStreak = habit.streak - 1;
             newLastChecked = yesterday;
             newDone = false;
-        } else if (habit.lastDate === yesterday) {
+        } else if (habit.lastChecked === yesterday) {
             newStreak = habit.streak + 1;
             newLastChecked = today;
             newDone = true;
@@ -35,7 +35,7 @@ function HabitTracker() {
         setHabits(habits.map(h =>
             h.id !== habit.id ? h : {
                 ...h,
-                lastDate: newLastChecked,
+                lastChecked: newLastChecked,
                 done: newDone,
                 streak: newStreak
             }
