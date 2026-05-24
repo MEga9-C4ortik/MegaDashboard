@@ -14,37 +14,51 @@ function HabitTracker() {
     }, []);
 
     const toggleHabit = async (habit) => {
-        const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+        const now = new Date();
+        const hour = now.getHours();
 
-        let newStreak, newLastChecked, newDone;
+        const effectiveToday = today;
+        const effectiveYesterday = new Date(Date.now() - 86400000)
+            .toISOString().split('T')[0];
 
-        if (habit.lastChecked === today) {
-            newStreak = habit.streak - 1;
-            newLastChecked = yesterday;
-            newDone = false;
-        } else if (habit.lastChecked === yesterday) {
+        const gracePeriod = hour < 12;
+
+        let newStreak, newLastChecked, newMarkedForDate;
+
+        if (habit.markedForDate === today) {
+            newStreak = Math.max(0, habit.streak - 1);
+            newLastChecked = effectiveYesterday;
+            newMarkedForDate = null;
+        } else if (
+            habit.markedForDate === effectiveYesterday ||
+            (gracePeriod && habit.markedForDate === new Date(Date.now() - 172800000)
+                .toISOString().split('T')[0])
+        ) {
             newStreak = habit.streak + 1;
             newLastChecked = today;
-            newDone = true;
+            newMarkedForDate = today;
         } else {
             newStreak = 1;
             newLastChecked = today;
-            newDone = true;
+            newMarkedForDate = today;
         }
 
         setHabits(habits.map(h =>
             h.id !== habit.id ? h : {
-                ...h,
+                ...h, streak: newStreak,
                 lastChecked: newLastChecked,
-                done: newDone,
-                streak: newStreak
+                markedForDate: newMarkedForDate
             }
         ));
 
         await fetch(`/api/habits?id=${habit.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ streak: newStreak, lastChecked: newLastChecked })
+            body: JSON.stringify({
+                streak: newStreak,
+                lastChecked: newLastChecked,
+                markedForDate: newMarkedForDate
+            })
         });
     };
 
@@ -101,7 +115,7 @@ function HabitTracker() {
                     <div
                         onClick={() => toggleHabit(habit)}
                         className={`w-4 h-4 rounded-sm border flex-shrink-0 cursor-pointer transition-colors ${
-                            habit.done
+                            habit.markedForDate === today
                                 ? 'bg-white border-white'
                                 : 'border-neutral-600 hover:border-neutral-400'
                         }`}
@@ -128,7 +142,7 @@ function HabitTracker() {
                         <span
                             onClick={() => toggleHabit(habit)}
                             className={`flex-1 text-sm cursor-pointer transition-colors ${
-                                habit.done ? 'line-through text-neutral-600' : 'text-neutral-300'
+                                habit.markedForDate === today ? 'line-through text-neutral-600' : 'text-neutral-300'
                             }`}
                         >
                             {habit.name}
@@ -144,7 +158,7 @@ function HabitTracker() {
             {isAdding ? (
                 <input
                     className="px-2 py-1.5 text-sm bg-transparent text-white outline-none border-b border-neutral-700 placeholder-neutral-700"
-                    onBlur={(e) => addHabit(e.target.value)}
+                    onBlur={(e) => setIsAdding(false)}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') addHabit(e.target.value);
                         if (e.key === 'Escape') setIsAdding(false);

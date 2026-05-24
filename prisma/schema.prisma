@@ -8,9 +8,10 @@ datasource db {
 }
 
 model Habit {
-  id          String   @id @default(cuid())
-  label       String
-  streak      Int      @default(0)
-  lastChecked String?
-  createdAt   DateTime @default(now())
+  id            String   @id @default(cuid())
+  label         String
+  streak        Int      @default(0)
+  lastChecked   String?
+  markedForDate String?
+  createdAt     DateTime @default(now())
 }
