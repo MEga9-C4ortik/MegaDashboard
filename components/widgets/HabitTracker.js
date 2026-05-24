@@ -5,19 +5,41 @@ function HabitTracker() {
     const today = new Date().toISOString().split('T')[0];
     const [contextMenu, setContextMenu] = useState(null);
     const [isAdding, setIsAdding] = useState(false);
-    const [habits, setHabits] = useState([
-        { id: '1', name: 'Stretching', streak: 0, done: false, lastDate: null, isEditing: false },
-        { id: '2', name: 'Reading',    streak: 0, done: false, lastDate: null, isEditing: false },
-    ]);
+    const [habits, setHabits] = useState([]);
 
-    const toggleHabit = (habit) => {
+    useEffect(() => {
+        fetch('/api/habits')
+            .then(r => r.json())
+            .then(setHabits);
+    }, []);
+
+    const toggleHabit = async (habit) => {
         const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
         setHabits(habits.map(h => {
             if (h.id !== habit.id) return h;
-            if (habit.lastDate === today) return { ...h, lastDate: yesterday, done: false, streak: h.streak - 1 };
-            if (habit.lastDate === yesterday) return { ...h, lastDate: today, done: true, streak: h.streak + 1 };
-            return { ...h, lastDate: today, done: true, streak: 1 };
+            if (habit.lastDate === today)
+                return { ...h,
+                    lastDate: yesterday,
+                    done: false,
+                    streak: h.streak - 1
+            };
+            if (habit.lastDate === yesterday)
+                return { ...h,
+                    lastDate: today,
+                    done: true,
+                    streak: h.streak + 1
+            };
+            return { ...h,
+                lastDate: today,
+                done: true,
+                streak: 1
+            };
         }));
+        await fetch(`/api/habits?id=${habit.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ streak: newStreak, lastChecked: newLastChecked })
+        });
     };
 
     const addHabit = (name) => {
