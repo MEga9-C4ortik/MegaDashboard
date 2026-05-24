@@ -42,20 +42,19 @@ function HabitTracker() {
         });
     };
 
-    const addHabit = (name) => {
-        if (!name.trim()) {
-            setIsAdding(false);
-            return;
-        }
-        setHabits([...habits, {
-            id: crypto.randomUUID(), name, streak: 0,
-            done: false, lastDate: null, isEditing: false
-        }]);
-        setIsAdding(false);
+    const addHabit = async (label) => {
+        const res = await fetch('/api/habits', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ label })
+        });
+        const habit = await res.json();
+        setHabits(prev => [...prev, habit]);
     };
 
-    const deleteHabit = (habitId) => {
-        setHabits(prev => prev.filter(h => h.id !== habitId));
+    const deleteHabit = async (id) => {
+        setHabits(prev => prev.filter(h => h.id !== id));
+        await fetch(`/api/habits?id=${id}`, { method: 'DELETE' });
     };
 
     const handleContextMenu = (e, habit) => {
