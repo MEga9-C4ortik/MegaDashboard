@@ -1,5 +1,5 @@
 'use client';
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 
 function HabitTracker() {
     const today = new Date().toISOString().split('T')[0];
@@ -53,7 +53,7 @@ function HabitTracker() {
     };
 
     //mobile context menu
-    let holdTimer = null;
+    let holdTimer = useRef(null);
 
 
 
@@ -66,7 +66,7 @@ function HabitTracker() {
     return (
         <div>
             {habits.map(habit => (
-                <div key={habit.id} className="habit" onClick={(e) => handleContextMenu(e, habit)}>
+                <div key={habit.id} className="habit" onContextMenu={(e) => handleContextMenu(e, habit)}>
                     <input className={""}
                            type={"checkbox"}
                            onChange={()=> toggleHabit(habit)}
