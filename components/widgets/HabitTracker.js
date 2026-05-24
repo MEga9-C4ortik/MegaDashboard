@@ -37,6 +37,10 @@ function HabitTracker() {
         }));
     }
 
+    const deleteHabit = (habitId) => {
+        setHabits(habits => habits.filter(h => h.id !== habitId));
+    }
+
     return (
         <div>
             {habits.map(habit => (
