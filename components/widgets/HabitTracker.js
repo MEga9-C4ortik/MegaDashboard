@@ -84,12 +84,13 @@ function HabitTracker() {
                            type={"checkbox"}
                            onChange={()=> toggleHabit(habit)}
                            checked={habit.done}/>
-                    <span onClick={(e) => {
+                    {habit.isEditing ? (<input
+                        onClick={(e) => {
                         e.stopPropagation();
                         toggleHabit(habit);
                     }}>
-                        {habit.name}
-                    </span>
+                        {habit.name})
+                    </input>)}
                     <span>
                         {habit.streak}
                     </span>
@@ -108,15 +109,18 @@ function HabitTracker() {
                             h.id === contextMenu.habitId ? {...h, isEditing: true} : h));
                         setContextMenu(null);
                     }}>Edit</button>
-                    <button onClick={() => {Delete}}>Delete</button>
+                    <button onClick={() => {
+                        deleteHabit(habit.id);
+                        setContextMenu(null);
+                    }}>Delete</button>
                 </div>
             )}
 
             {habit.isEditing ? (
                 <input
                     value={habit.name}
-                    onChange={...}   // что должно происходить при вводе?
-                    onBlur={...}     // что происходит когда инпут теряет фокус?
+                    onChange={...}
+                    onBlur={...}
                     autoFocus
                 />
             ) : (
