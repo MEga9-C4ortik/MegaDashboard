@@ -60,6 +60,7 @@ function HabitTracker() {
         });
         const habit = await res.json();
         setHabits(prev => [...prev, habit]);
+        setIsAdding(false);
     };
 
     const deleteHabit = async (id) => {
@@ -97,7 +98,6 @@ function HabitTracker() {
                     onTouchStart={(e) => handleTouchStart(e, habit)}
                     onTouchEnd={handleTouchEnd}
                 >
-                    {/* чекбокс */}
                     <div
                         onClick={() => toggleHabit(habit)}
                         className={`w-4 h-4 rounded-sm border flex-shrink-0 cursor-pointer transition-colors ${
