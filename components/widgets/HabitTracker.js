@@ -21,7 +21,10 @@ function HabitTracker() {
     };
 
     const addHabit = (name) => {
-        if (!name.trim()) return;
+        if (!name.trim()) {
+            setIsAdding(false);
+            return;
+        }
         setHabits([...habits, {
             id: crypto.randomUUID(), name, streak: 0,
             done: false, lastDate: null, isEditing: false
