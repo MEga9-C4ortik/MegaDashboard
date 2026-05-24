@@ -15,26 +15,32 @@ function HabitTracker() {
 
     const toggleHabit = async (habit) => {
         const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-        setHabits(habits.map(h => {
-            if (h.id !== habit.id) return h;
-            if (habit.lastDate === today)
-                return { ...h,
-                    lastDate: yesterday,
-                    done: false,
-                    streak: h.streak - 1
-            };
-            if (habit.lastDate === yesterday)
-                return { ...h,
-                    lastDate: today,
-                    done: true,
-                    streak: h.streak + 1
-            };
-            return { ...h,
-                lastDate: today,
-                done: true,
-                streak: 1
-            };
-        }));
+
+        let newStreak, newLastChecked, newDone;
+
+        if (habit.lastDate === today) {
+            newStreak = habit.streak - 1;
+            newLastChecked = yesterday;
+            newDone = false;
+        } else if (habit.lastDate === yesterday) {
+            newStreak = habit.streak + 1;
+            newLastChecked = today;
+            newDone = true;
+        } else {
+            newStreak = 1;
+            newLastChecked = today;
+            newDone = true;
+        }
+
+        setHabits(habits.map(h =>
+            h.id !== habit.id ? h : {
+                ...h,
+                lastDate: newLastChecked,
+                done: newDone,
+                streak: newStreak
+            }
+        ));
+
         await fetch(`/api/habits?id=${habit.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
@@ -43,6 +49,10 @@ function HabitTracker() {
     };
 
     const addHabit = async (label) => {
+        if (!label.trim()) {
+            setIsAdding(false);
+            return;
+        }
         const res = await fetch('/api/habits', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
