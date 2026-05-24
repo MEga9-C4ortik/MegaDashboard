@@ -1,6 +1,5 @@
 'use client';
-import {useState} from "react";
-
+import {useEffect, useState} from "react";
 
 function HabitTracker() {
     const today = new Date().toISOString().split('T')[0];
@@ -10,6 +9,7 @@ function HabitTracker() {
         { id: '2', name: 'Reading',    streak: 0, done: false, lastDate: null },
     ]);
 
+    //habit
     const toggleHabit = (habit) => {
         const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
 
@@ -42,6 +42,7 @@ function HabitTracker() {
         setHabits(habits => habits.filter(h => h.id !== habitId));
     }
 
+    //menu
     const handleContextMenu = (e, habit) => {
         e.preventDefault();
         setContextMenu({
@@ -50,6 +51,17 @@ function HabitTracker() {
             habitId: habit.id
         });
     };
+
+    //mobile context menu
+    let holdTimer = null;
+
+
+
+    useEffect(() => {
+        const close = () => setContextMenu(null);
+        window.addEventListener('click', close);
+        return () => window.removeEventListener('click', close);
+    }, []);
 
     return (
         <div>
@@ -68,6 +80,16 @@ function HabitTracker() {
                 </div>
             ))
             }
+            {contextMenu && (
+                <div style={{
+                    position: 'fixed',
+                    top: contextMenu.y,
+                    left: contextMenu.x
+                }}>
+                    <button onClick={() => {/* edit */}}>Edit</button>
+                    <button onClick={() => {/* delete */}}>Delete</button>
+                </div>
+            )}
         </div>
     )
 }
