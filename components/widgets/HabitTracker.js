@@ -16,11 +16,8 @@ function HabitTracker() {
     const toggleHabit = async (habit) => {
         const now = new Date();
         const hour = now.getHours();
-
-        const effectiveToday = today;
         const effectiveYesterday = new Date(Date.now() - 86400000)
             .toLocaleDateString('en-CA');
-
         const gracePeriod = hour < 12;
 
         let newStreak, newLastChecked, newMarkedForDate;
@@ -32,7 +29,7 @@ function HabitTracker() {
         } else if (
             habit.markedForDate === effectiveYesterday ||
             (gracePeriod && habit.markedForDate === new Date(Date.now() - 172800000)
-                .toISOString().split('T')[0])
+                .toLocaleDateString('en-CA'))
         ) {
             newStreak = habit.streak + 1;
             newLastChecked = today;
