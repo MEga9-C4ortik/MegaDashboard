@@ -4,6 +4,7 @@ import {useState} from "react";
 
 function HabitTracker() {
     const today = new Date().toISOString().split('T')[0];
+    const [contextMenu, setContextMenu] = useState(null);
     const [habits, setHabits] = useState([
         { id: '1', name: 'Stretching', streak: 0, done: false, lastDate: null },
         { id: '2', name: 'Reading',    streak: 0, done: false, lastDate: null },
@@ -41,16 +42,29 @@ function HabitTracker() {
         setHabits(habits => habits.filter(h => h.id !== habitId));
     }
 
+    const handleContextMenu = (e, habit) => {
+        e.preventDefault();
+        setContextMenu({
+            x: e.clientX,
+            y: e.clientY,
+            habitId: habit.id
+        });
+    };
+
     return (
         <div>
             {habits.map(habit => (
-                <div key={habit.id} className="habit">
+                <div key={habit.id} className="habit" onClick={(e) => handleContextMenu(e, habit)}>
                     <input className={""}
                            type={"checkbox"}
                            onChange={()=> toggleHabit(habit)}
                            checked={habit.done}/>
-                    <span> {habit.name} </span>
-                    <span> {habit.streak} </span>
+                    <span onClick={() => toggleHabit(habit)}>
+                        {habit.name}
+                    </span>
+                    <span>
+                        {habit.streak}
+                    </span>
                 </div>
             ))
             }
