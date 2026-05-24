@@ -2,7 +2,7 @@
 import {useEffect, useState, useRef} from "react";
 
 function HabitTracker() {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toLocaleDateString('en-CA');
     const [contextMenu, setContextMenu] = useState(null);
     const [isAdding, setIsAdding] = useState(false);
     const [habits, setHabits] = useState([]);
@@ -19,7 +19,7 @@ function HabitTracker() {
 
         const effectiveToday = today;
         const effectiveYesterday = new Date(Date.now() - 86400000)
-            .toISOString().split('T')[0];
+            .toLocaleDateString('en-CA');
 
         const gracePeriod = hour < 12;
 
