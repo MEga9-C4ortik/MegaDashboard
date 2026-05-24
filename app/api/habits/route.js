@@ -18,10 +18,10 @@ export async function POST(request) {
 export async function PATCH(request) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-    const { streak, lastChecked } = await request.json();
+    const { streak, lastChecked, markedForDate } = await request.json();
     const habit = await prisma.habit.update({
         where: { id },
-        data: { streak, lastChecked }
+        data: { streak, lastChecked, markedForDate }
     });
     return Response.json(habit);
 }

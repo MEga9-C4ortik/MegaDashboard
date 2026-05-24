@@ -124,9 +124,9 @@ function HabitTracker() {
                     {habit.isEditing ? (
                         <input
                             className="flex-1 bg-transparent text-sm text-white outline-none border-b border-neutral-600"
-                            value={habit.name}
+                            value={habit.label}
                             onChange={(e) => setHabits(habits.map(h =>
-                                h.id === habit.id ? { ...h, name: e.target.value } : h
+                                h.id === habit.id ? { ...h, label: e.target.value } : h
                             ))}
                             onBlur={() => setHabits(habits.map(h =>
                                 h.id === habit.id ? { ...h, isEditing: false } : h
@@ -145,7 +145,7 @@ function HabitTracker() {
                                 habit.markedForDate === today ? 'line-through text-neutral-600' : 'text-neutral-300'
                             }`}
                         >
-                            {habit.name}
+                            {habit.label}
                         </span>
                     )}
 
