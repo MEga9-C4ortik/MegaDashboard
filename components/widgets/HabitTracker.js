@@ -38,6 +38,10 @@ function HabitTracker() {
         }));
     }
 
+    const addHabit = (habit) => {
+
+    }
+
     const deleteHabit = (habitId) => {
         setHabits(habits => habits.filter(h => h.id !== habitId));
     }
@@ -82,18 +86,35 @@ function HabitTracker() {
                 <div key={habit.id} className="habit" onContextMenu={(e) => handleContextMenu(e, habit)}>
                     <input className={""}
                            type={"checkbox"}
-                           onChange={()=> toggleHabit(habit)}
+                           onChange={() => toggleHabit(habit)}
                            checked={habit.done}/>
-                    {habit.isEditing ? (<input
-                        onClick={(e) => {
-                        e.stopPropagation();
-                        toggleHabit(habit);
-                    }}>
-                        {habit.name})
-                    </input>)}
-                    <span>
-                        {habit.streak}
-                    </span>
+                    {habit.isEditing ? (
+                        <input
+                            value={habit.name}
+                            onChange={(e) => {
+                                setHabits(habits.map(h =>
+                                    h.id === habit.id ? {...h, name: e.target.value} : h
+                                ))
+                            }}
+                            onBlur={() =>
+                                setHabits(habits.map(h =>
+                                    h.id === habit.id ? {...h, isEditing: false} : h
+                                ))
+                            }
+                            onKeyDown={(e) => {
+                                if(e.key === "Enter") {
+                                    setHabits(habits.map(h =>
+                                        h.id === habit.id ? {...h, isEditing: false} : h
+                                    ));
+                                    e.preventDefault();
+                                }
+                            }}
+                            autoFocus={true}
+                        />
+                    ) : (
+                        <span onClick={() => toggleHabit(habit)}>{habit.name}</span>
+                    )}
+
                 </div>
             ))
             }
@@ -104,27 +125,18 @@ function HabitTracker() {
                     top: contextMenu.y,
                     left: contextMenu.x
                 }}>
-                    <button onClick={() =>{
+                    <button onClick={() => {
                         setHabits(habits.map(h =>
                             h.id === contextMenu.habitId ? {...h, isEditing: true} : h));
                         setContextMenu(null);
-                    }}>Edit</button>
+                    }}>Edit
+                    </button>
                     <button onClick={() => {
-                        deleteHabit(habit.id);
+                        deleteHabit(contextMenu.habitId);
                         setContextMenu(null);
-                    }}>Delete</button>
+                    }}>Delete
+                    </button>
                 </div>
-            )}
-
-            {habit.isEditing ? (
-                <input
-                    value={habit.name}
-                    onChange={...}
-                    onBlur={...}
-                    autoFocus
-                />
-            ) : (
-                <span>{habit.name}</span>
             )}
         </div>
     )

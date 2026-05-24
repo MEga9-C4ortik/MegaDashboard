@@ -32,8 +32,7 @@ function DailyFocus() {
                             e.preventDefault();
                             handleSave();
                         }
-                    }
-                    }
+                    }}
                     autoFocus={true}
                 />
                 : <p className={"text-2xl font-semibold text-white cursor-pointer hover:text-gray-400 transition-colors"}
