@@ -53,9 +53,22 @@ function HabitTracker() {
     };
 
     //mobile context menu
-    let holdTimer = useRef(null);
+    const holdTimer = useRef(null);
 
+    const handleTouchStart = (e, habit) => {
+        holdTimer.current = setTimeout(() => {
+            const touch = e.touches[0];
+            setContextMenu({
+                x: touch.clientX,
+                y: touch.clientY,
+                habitId: habit.id
+            });
+        }, 500);
+    };
 
+    const handleTouchEnd = () => {
+        clearTimeout(holdTimer.current);
+    };
 
     useEffect(() => {
         const close = () => setContextMenu(null);
@@ -71,7 +84,10 @@ function HabitTracker() {
                            type={"checkbox"}
                            onChange={()=> toggleHabit(habit)}
                            checked={habit.done}/>
-                    <span onClick={() => toggleHabit(habit)}>
+                    <span onClick={(e) => {
+                        e.stopPropagation();
+                        toggleHabit(habit);
+                    }}>
                         {habit.name}
                     </span>
                     <span>
