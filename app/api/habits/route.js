@@ -19,6 +19,7 @@ export async function PATCH(request) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     const { label, streak, lastChecked, markedForDate } = await request.json();
+    if (!id) return Response.json({ error: 'id required' }, { status: 400 });
     const habit = await prisma.habit.update({
         where: { id },
         data: { label, streak, lastChecked, markedForDate }
@@ -29,6 +30,7 @@ export async function PATCH(request) {
 export async function DELETE(request) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
+    if (!id) return Response.json({ error: 'id required' }, { status: 400 });
     await prisma.habit.delete({ where: { id } });
     return Response.json({ ok: true });
 }

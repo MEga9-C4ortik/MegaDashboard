@@ -74,6 +74,14 @@ function HabitTracker() {
         setIsAdding(false);
     };
 
+    const updateHabitLabel = async (id, label) => {
+        await fetch(`/api/habits?id=${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ label })
+        })
+    };
+
     const deleteHabit = async (id) => {
         setHabits(prev => prev.filter(h => h.id !== id));
         await fetch(`/api/habits?id=${id}`, { method: 'DELETE' });
@@ -122,16 +130,22 @@ function HabitTracker() {
                         <input
                             className="flex-1 bg-transparent text-sm text-white outline-none border-b border-neutral-600"
                             value={habit.label}
-                            onChange={(e) => setHabits(habits.map(h =>
-                                h.id === habit.id ? { ...h, label: e.target.value } : h
-                            ))}
-                            onBlur={() => setHabits(habits.map(h =>
-                                h.id === habit.id ? { ...h, isEditing: false } : h
-                            ))}
+                            onChange={(e) => {
+                                setHabits(habits.map(h =>
+                                    h.id === habit.id ? { ...h, label: e.target.value } : h
+                                ))
+                            }}
+                            onBlur={() => {
+                                updateHabitLabel(habit.id,habit.label);
+                                setHabits(habits.map(h =>
+                                    h.id === habit.id ? {...h, isEditing: false} : h
+                                ))
+                            }}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') setHabits(habits.map(h =>
                                     h.id === habit.id ? { ...h, isEditing: false } : h
                                 ));
+                                e.target.blur();
                             }}
                             autoFocus
                         />
