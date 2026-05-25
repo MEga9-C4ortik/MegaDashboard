@@ -111,7 +111,7 @@ function HabitTracker() {
                 >
                     <div
                         onClick={() => toggleHabit(habit)}
-                        className={`w-4 h-4 rounded-sm border flex-shrink-0 cursor-pointer transition-colors ${
+                        className={`w-4 h-4 rounded-sm border shrink-0 cursor-pointer transition-colors ${
                             habit.markedForDate === today
                                 ? 'bg-white border-white'
                                 : 'border-neutral-600 hover:border-neutral-400'
