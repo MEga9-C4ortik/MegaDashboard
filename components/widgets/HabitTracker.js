@@ -1,8 +1,23 @@
 'use client';
-import {useEffect, useState, useRef} from "react";
+import { useEffect, useState, useRef } from "react";
+
+function getCurrentPeriod() {
+    const now = new Date();
+    if (now.getHours() < 12) {
+        return new Date(Date.now() - 86400000).toLocaleDateString('en-CA');
+    }
+    return now.toLocaleDateString('en-CA');
+}
+
+function getPreviousPeriod() {
+    const now = new Date();
+    if (now.getHours() < 12) {
+        return new Date(Date.now() - 172800000).toLocaleDateString('en-CA');
+    }
+    return new Date(Date.now() - 86400000).toLocaleDateString('en-CA');
+}
 
 function HabitTracker() {
-    const today = new Date().toLocaleDateString('en-CA');
     const [contextMenu, setContextMenu] = useState(null);
     const [isAdding, setIsAdding] = useState(false);
     const [habits, setHabits] = useState([]);
@@ -14,36 +29,38 @@ function HabitTracker() {
     }, []);
 
     const toggleHabit = async (habit) => {
-        const now = new Date();
-        const hour = now.getHours();
-        const effectiveYesterday = new Date(Date.now() - 86400000)
-            .toLocaleDateString('en-CA');
-        const gracePeriod = hour < 12;
+        const currentPeriod = getCurrentPeriod();
+        const previousPeriod = getPreviousPeriod();
 
-        let newStreak, newLastChecked, newMarkedForDate;
+        let newStreak, newPreviousStreak, newMarkedForDate;
 
-        if (habit.markedForDate === today) {
-            newStreak = Math.max(0, habit.streak - 1);
-            newLastChecked = effectiveYesterday;
+        if (habit.markedForDate === currentPeriod) {
+            // АНЧЕК — восстанавливаем стрик до чека
+            newStreak = habit.previousStreak;
+            newPreviousStreak = habit.previousStreak;
             newMarkedForDate = null;
-        } else if (
-            habit.markedForDate === effectiveYesterday ||
-            (gracePeriod && habit.markedForDate === new Date(Date.now() - 172800000)
-                .toLocaleDateString('en-CA'))
-        ) {
+        } else if (habit.markedForDate === null && habit.streak > 0) {
+            // РЕ-ЧЕК — анчекнул и снова чекнул в том же периоде
+            newStreak = habit.previousStreak + 1;
+            newPreviousStreak = habit.previousStreak;
+            newMarkedForDate = currentPeriod;
+        } else if (habit.markedForDate === previousPeriod) {
+            // ПРОДОЛЖЕНИЕ СТРИКА
+            newPreviousStreak = habit.streak;
             newStreak = habit.streak + 1;
-            newLastChecked = today;
-            newMarkedForDate = today;
+            newMarkedForDate = currentPeriod;
         } else {
+            // НОВЫЙ СТРИК (первый раз или после сброса)
+            newPreviousStreak = 0;
             newStreak = 1;
-            newLastChecked = today;
-            newMarkedForDate = today;
+            newMarkedForDate = currentPeriod;
         }
 
         setHabits(habits.map(h =>
             h.id !== habit.id ? h : {
-                ...h, streak: newStreak,
-                lastChecked: newLastChecked,
+                ...h,
+                streak: newStreak,
+                previousStreak: newPreviousStreak,
                 markedForDate: newMarkedForDate
             }
         ));
@@ -53,7 +70,7 @@ function HabitTracker() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 streak: newStreak,
-                lastChecked: newLastChecked,
+                previousStreak: newPreviousStreak,
                 markedForDate: newMarkedForDate
             })
         });
@@ -79,7 +96,7 @@ function HabitTracker() {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ label })
-        })
+        });
     };
 
     const deleteHabit = async (id) => {
@@ -107,6 +124,8 @@ function HabitTracker() {
         return () => window.removeEventListener('click', close);
     }, []);
 
+    const currentPeriod = getCurrentPeriod();
+
     return (
         <div className="flex flex-col gap-1">
             {habits.map(habit => (
@@ -120,7 +139,7 @@ function HabitTracker() {
                     <div
                         onClick={() => toggleHabit(habit)}
                         className={`w-4 h-4 rounded-sm border shrink-0 cursor-pointer transition-colors ${
-                            habit.markedForDate === today
+                            habit.markedForDate === currentPeriod
                                 ? 'bg-white border-white'
                                 : 'border-neutral-600 hover:border-neutral-400'
                         }`}
@@ -130,16 +149,14 @@ function HabitTracker() {
                         <input
                             className="flex-1 bg-transparent text-sm text-white outline-none border-b border-neutral-600"
                             value={habit.label}
-                            onChange={(e) => {
-                                setHabits(habits.map(h =>
-                                    h.id === habit.id ? { ...h, label: e.target.value } : h
-                                ))
-                            }}
+                            onChange={(e) => setHabits(habits.map(h =>
+                                h.id === habit.id ? { ...h, label: e.target.value } : h
+                            ))}
                             onBlur={() => {
-                                updateHabitLabel(habit.id,habit.label);
+                                updateHabitLabel(habit.id, habit.label);
                                 setHabits(habits.map(h =>
-                                    h.id === habit.id ? {...h, isEditing: false} : h
-                                ))
+                                    h.id === habit.id ? { ...h, isEditing: false } : h
+                                ));
                             }}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') e.target.blur();
@@ -150,7 +167,9 @@ function HabitTracker() {
                         <span
                             onClick={() => toggleHabit(habit)}
                             className={`flex-1 text-sm cursor-pointer transition-colors ${
-                                habit.markedForDate === today ? 'line-through text-neutral-600' : 'text-neutral-300'
+                                habit.markedForDate === currentPeriod
+                                    ? 'line-through text-neutral-600'
+                                    : 'text-neutral-300'
                             }`}
                         >
                             {habit.label}
@@ -166,7 +185,7 @@ function HabitTracker() {
             {isAdding ? (
                 <input
                     className="px-2 py-1.5 text-sm bg-transparent text-white outline-none border-b border-neutral-700 placeholder-neutral-700"
-                    onBlur={(e) => setIsAdding(false)}
+                    onBlur={() => setIsAdding(false)}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') addHabit(e.target.value);
                         if (e.key === 'Escape') setIsAdding(false);
@@ -183,7 +202,6 @@ function HabitTracker() {
                 </button>
             )}
 
-            {/* context menu */}
             {contextMenu && (
                 <div
                     style={{ top: contextMenu.y, left: contextMenu.x }}
