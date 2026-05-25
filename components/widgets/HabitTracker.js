@@ -142,10 +142,7 @@ function HabitTracker() {
                                 ))
                             }}
                             onKeyDown={(e) => {
-                                if (e.key === 'Enter') {setHabits(habits.map(h =>
-                                    h.id === habit.id ? { ...h, isEditing: false } : h))
-                                    e.target.blur();
-                                }
+                                if (e.key === 'Enter') e.target.blur();
                             }}
                             autoFocus
                         />
