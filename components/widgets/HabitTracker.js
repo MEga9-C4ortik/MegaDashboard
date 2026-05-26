@@ -166,7 +166,7 @@ function HabitTracker() {
                     ) : (
                         <span
                             onClick={() => toggleHabit(habit)}
-                            className={`flex-1 text-sm cursor-pointer transition-colors ${
+                            className={`flex-1 text-sm cursor-pointer truncate transition-colors ${
                                 habit.markedForDate === currentPeriod
                                     ? 'line-through text-neutral-600'
                                     : 'text-neutral-300'

@@ -44,33 +44,30 @@ export default function Weather() {
     );
 
     return (
-        <div className="flex flex-col gap-1">
-
-            <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4 w-full">
+            {/* Левая часть — иконка + температура */}
+            <div className="flex items-center gap-1">
                 <img
                     src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
                     alt={weather.description}
-                    className="w-10 h-10 object-contain"
+                    className="w-10 h-10 object-contain -ml-2"
                 />
-                <span className="text-2xl font-light text-white">
-                    {weather.temp}°
-                </span>
-
-                <span className="text-lg font-light text-white">
-                    {weather.humidity}%
-                </span>
+                <span className="text-3xl font-light text-white">
+                {weather.temp}°
+            </span>
             </div>
 
-            <div className="text-sm text-neutral-300">
-                {weather.city}
-            </div>
-
-            <div className="text-xs text-neutral-500 capitalize">
-                {weather.description}
-            </div>
-
-            <div className="text-xs text-neutral-500">
-                {weather.sunrise} - {weather.sunset}
+            {/* Правая часть — детали */}
+            <div className="flex flex-col gap-0.5">
+                <div className="text-sm text-neutral-300 font-medium">
+                    {weather.city}
+                </div>
+                <div className="text-xs text-neutral-500 capitalize">
+                    {weather.description}
+                </div>
+                <div className="text-xs text-neutral-600">
+                    {weather.humidity}% · {weather.sunrise} – {weather.sunset}
+                </div>
             </div>
         </div>
     );

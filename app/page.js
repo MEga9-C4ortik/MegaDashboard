@@ -7,49 +7,49 @@ import Weather from '../components/widgets/Weather';
 
 export default function Home() {
     return (
-        <main className="h-dvh bg-neutral-900 text-white p-3 overflow-hidden grid gap-3"
+        <main className="h-dvh bg-neutral-950 text-white p-2 overflow-hidden grid gap-2"
               style={{
-                  gridTemplateColumns: '240px 1fr 240px',
-                  gridTemplateRows: '72px 1fr 160px',
+                  gridTemplateColumns: '220px 1fr 220px',
+                  gridTemplateRows: '68px 1fr 150px',
               }}
         >
-            {/* РЯД 1: Clock | DailyFocus | Weather */}
-            <div className="bg-neutral-800 rounded-2xl p-4 flex items-center">
+            {/* РЯД 1 */}
+            <div className="bg-neutral-900 rounded-xl px-4 py-3 flex items-center border border-neutral-800/50">
                 <Clock />
             </div>
 
-            <div className="bg-neutral-800 rounded-2xl p-4 flex items-center">
+            <div className="bg-neutral-900 rounded-xl px-4 py-3 flex items-center border border-neutral-800/50">
                 <DailyFocus />
             </div>
 
-            <div className="bg-neutral-800 rounded-2xl p-4 flex items-center">
+            <div className="bg-neutral-900 rounded-xl px-4 py-3 flex items-center border border-neutral-800/50">
                 <Weather />
             </div>
 
-            {/* РЯД 2: Habits | Todo(placeholder) | Calendar(placeholder) */}
-            <div className="bg-neutral-800 rounded-2xl p-4 overflow-y-auto min-h-0">
+            {/* РЯД 2 */}
+            <div className="bg-neutral-900 rounded-xl p-3 overflow-y-auto min-h-0 border border-neutral-800/50">
                 <Habits />
             </div>
 
-            <div className="bg-neutral-800 rounded-2xl p-4 flex items-center justify-center">
-                <span className="text-neutral-600">Todo — coming soon</span>
+            <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
+                <span className="text-neutral-700 text-sm">Todo — coming soon</span>
             </div>
 
-            <div className="bg-neutral-800 rounded-2xl p-4 flex items-center justify-center">
-                <span className="text-neutral-600">Calendar — coming soon</span>
+            <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
+                <span className="text-neutral-700 text-sm">Calendar — coming soon</span>
             </div>
 
-            {/* РЯД 3: Health | Notes | Currency */}
-            <div className="bg-neutral-800 rounded-2xl p-4 flex items-center justify-center">
-                <span className="text-neutral-600">Health — coming soon</span>
+            {/* РЯД 3 */}
+            <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
+                <span className="text-neutral-700 text-sm">Health</span>
             </div>
 
-            <div className="bg-neutral-800 rounded-2xl p-4 flex items-center justify-center">
-                <span className="text-neutral-600">Notes — coming soon</span>
+            <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
+                <span className="text-neutral-700 text-sm">Notes — coming soon</span>
             </div>
 
-            <div className="bg-neutral-800 rounded-2xl p-4 flex items-center justify-center">
-                <span className="text-neutral-600">Currency — coming soon</span>
+            <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
+                <span className="text-neutral-700 text-sm">Currency</span>
             </div>
         </main>
     )
