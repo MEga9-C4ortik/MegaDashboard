@@ -7,10 +7,10 @@ import Weather from '../components/widgets/Weather';
 
 export default function Home() {
     return (
-        <main className="h-screen bg-neutral-900 text-white p-4 overflow-hidden grid gap-3"
+        <main className="h-dvh bg-neutral-900 text-white p-3 overflow-hidden grid gap-3"
               style={{
-                  gridTemplateColumns: '22% 1fr 22%',
-                  gridTemplateRows: '12dvh 1fr 28dvh',
+                  gridTemplateColumns: '240px 1fr 240px',
+                  gridTemplateRows: '72px 1fr 160px',
               }}
         >
             {/* РЯД 1: Clock | DailyFocus | Weather */}
@@ -27,7 +27,7 @@ export default function Home() {
             </div>
 
             {/* РЯД 2: Habits | Todo(placeholder) | Calendar(placeholder) */}
-            <div className="bg-neutral-800 rounded-2xl p-4 overflow-y-auto">
+            <div className="bg-neutral-800 rounded-2xl p-4 overflow-y-auto min-h-0">
                 <Habits />
             </div>
 

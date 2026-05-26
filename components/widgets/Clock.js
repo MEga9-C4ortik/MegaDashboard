@@ -13,7 +13,7 @@ export default function Clock() {
     if (!now) return null;
 
     return (
-        <div className="text-sm text-neutral-100 tracking-widest uppercase">
+        <div className="text-xs text-neutral-100 tracking-widest uppercase leading-relaxed">
             <div>
                 {now.toLocaleDateString("en-US", {
                     weekday: "short",
@@ -22,7 +22,7 @@ export default function Clock() {
                     year: "numeric"
                 }).replaceAll(",", " ")}
             </div>
-            <div>
+            <div className="text-lg font-medium mt-0.5">
                 {now.toLocaleTimeString("en-US", {
                     hour: "2-digit",
                     minute: "2-digit",
