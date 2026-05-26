@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Dashboard",
-  description: "Mega",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({ children }) {
