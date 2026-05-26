@@ -9,7 +9,7 @@ export async function GET(request) {
 
     const res = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.OPENWEATHER_API_KEY}&units=metric`,
-        { next: { revalidate: 1800 } }
+        { next: { revalidate: 1000 } }
     );
 
     if (!res.ok) return Response.json({ error: 'failed' }, { status: 502 });
