@@ -14,13 +14,19 @@ export async function GET(request) {
 
     if (!res.ok) return Response.json({ error: 'failed' }, { status: 502 });
 
+    const toTime = (unix) => new Date(unix * 1000).toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
+
     const data = await res.json();
     return Response.json({
         temp: Math.round(data.main.temp),
         feels_like: Math.round(data.main.feels_like),
-        sunrise: Math.round(data.main.sunrise),
-        sunset: Math.round(data.main.sunset),
-        humidity: Math.round(data.main.humidity),
+        sunrise: toTime(data.sys.sunrise),
+        sunset: toTime(data.sys.sunset),
+        humidity: data.main.humidity,
         description: data.weather[0].description,
         icon: data.weather[0].icon,
         city: data.name

@@ -55,6 +55,10 @@ export default function Weather() {
                 <span className="text-2xl font-light text-white">
                     {weather.temp}°
                 </span>
+
+                <span className="text-lg font-light text-white">
+                    {weather.humidity}%
+                </span>
             </div>
 
             <div className="text-sm text-neutral-300">
@@ -66,7 +70,7 @@ export default function Weather() {
             </div>
 
             <div className="text-xs text-neutral-500">
-                H: {weather.high}° · L: {weather.low}°
+                {weather.sunrise} - {weather.sunset}
             </div>
         </div>
     );
