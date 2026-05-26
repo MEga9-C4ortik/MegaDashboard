@@ -18,8 +18,9 @@ export async function GET(request) {
     return Response.json({
         temp: Math.round(data.main.temp),
         feels_like: Math.round(data.main.feels_like),
-        high: Math.round(data.main.temp_max),
-        low: Math.round(data.main.temp_min),
+        sunrise: Math.round(data.main.sunrise),
+        sunset: Math.round(data.main.sunset),
+        humidity: Math.round(data.main.humidity),
         description: data.weather[0].description,
         icon: data.weather[0].icon,
         city: data.name

@@ -52,7 +52,7 @@ export default function Weather() {
                     alt={weather.description}
                     className="w-10 h-10 object-contain"
                 />
-                <span className="text-4xl font-light text-white">
+                <span className="text-2xl font-light text-white">
                     {weather.temp}°
                 </span>
             </div>
