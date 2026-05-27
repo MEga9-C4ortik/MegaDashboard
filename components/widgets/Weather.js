@@ -8,7 +8,6 @@ export default function Weather() {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
-
             async (position) => {
                 const { latitude, longitude } = position.coords;
                 try {
@@ -24,8 +23,7 @@ export default function Weather() {
                     setLoading(false);
                 }
             },
-
-            (err) => {
+            () => {
                 setError('Location access denied');
                 setLoading(false);
             }
@@ -33,40 +31,41 @@ export default function Weather() {
     }, []);
 
     if (loading) return (
-        <div className="animate-pulse">
-            <div className="h-8 w-16 bg-neutral-800 rounded mb-1" />
-            <div className="h-4 w-24 bg-neutral-800 rounded" />
+        <div className="animate-pulse flex items-center gap-3 w-full">
+            <div className="w-8 h-8 bg-neutral-800 rounded-full shrink-0" />
+            <div className="flex flex-col gap-1">
+                <div className="h-5 w-12 bg-neutral-800 rounded" />
+                <div className="h-3 w-20 bg-neutral-800 rounded" />
+            </div>
         </div>
     );
 
     if (error) return (
-        <div className="text-neutral-500 text-sm">{error}</div>
+        <div className="text-neutral-500 text-xs">{error}</div>
     );
 
     return (
-        <div className="flex items-center gap-4 w-full">
-            {/* Левая часть — иконка + температура */}
-            <div className="flex items-center gap-1">
+        <div className="flex items-center gap-3 w-full min-w-0">
+            <div className="flex items-center gap-0.5 shrink-0">
                 <img
-                    src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+                    src={`https://openweathermap.org/img/wn/${weather.icon}.png`}
                     alt={weather.description}
-                    className="w-10 h-10 object-contain -ml-2"
+                    className="w-8 h-8 object-contain"
                 />
-                <span className="text-3xl font-light text-white">
-                {weather.temp}°
-            </span>
+                <span className="text-2xl font-light text-white">
+                    {weather.temp}°
+                </span>
             </div>
 
-            {/* Правая часть — детали */}
-            <div className="flex flex-col gap-0.5">
-                <div className="text-sm text-neutral-300 font-medium">
+            <div className="flex flex-col gap-0 min-w-0">
+                <div className="text-sm text-neutral-300 font-medium truncate">
                     {weather.city}
                 </div>
-                <div className="text-xs text-neutral-500 capitalize">
+                <div className="text-xs text-neutral-500 capitalize truncate">
                     {weather.description}
                 </div>
-                <div className="text-xs text-neutral-600">
-                    {weather.humidity}% · {weather.sunrise} – {weather.sunset}
+                <div className="text-xs text-neutral-600 truncate">
+                    {weather.humidity}% · {weather.sunrise}–{weather.sunset}
                 </div>
             </div>
         </div>

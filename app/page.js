@@ -9,20 +9,20 @@ export default function Home() {
     return (
         <main className="h-dvh bg-neutral-950 text-white p-2 overflow-hidden grid gap-2"
               style={{
-                  gridTemplateColumns: '220px 1fr 220px',
-                  gridTemplateRows: '68px 1fr 150px',
+                  gridTemplateColumns: 'minmax(180px, 240px) 1fr minmax(180px, 240px)',
+                  gridTemplateRows: 'auto 1fr auto',
               }}
         >
             {/* РЯД 1 */}
-            <div className="bg-neutral-900 rounded-xl px-4 py-3 flex items-center border border-neutral-800/50">
+            <div className="bg-neutral-900 rounded-xl px-4 py-3 flex items-center overflow-hidden border border-neutral-800/50">
                 <Clock />
             </div>
 
-            <div className="bg-neutral-900 rounded-xl px-4 py-3 flex items-center border border-neutral-800/50">
+            <div className="bg-neutral-900 rounded-xl px-4 py-3 flex items-center overflow-hidden border border-neutral-800/50">
                 <DailyFocus />
             </div>
 
-            <div className="bg-neutral-900 rounded-xl px-4 py-3 flex items-center border border-neutral-800/50">
+            <div className="bg-neutral-900 rounded-xl px-4 py-3 flex items-center overflow-hidden border border-neutral-800/50">
                 <Weather />
             </div>
 
@@ -31,11 +31,11 @@ export default function Home() {
                 <Habits />
             </div>
 
-            <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
+            <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center min-h-0 border border-neutral-800/50">
                 <span className="text-neutral-700 text-sm">Todo — coming soon</span>
             </div>
 
-            <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
+            <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center min-h-0 border border-neutral-800/50">
                 <span className="text-neutral-700 text-sm">Calendar — coming soon</span>
             </div>
 
