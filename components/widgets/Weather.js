@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { Droplets } from 'lucide-react';
 
 export default function Weather() {
     const [weather, setWeather] = useState(null);
@@ -47,7 +48,6 @@ export default function Weather() {
 
     return (
         <div className="flex flex-col gap-0.5 w-full min-w-0">
-            {/* строка 1: иконка + температура + город */}
             <div className="flex items-center gap-1.5 min-w-0">
                 <img
                     src={`https://openweathermap.org/img/wn/${weather.icon}.png`}
@@ -61,9 +61,11 @@ export default function Weather() {
                     {weather.city}
                 </span>
             </div>
-            {/* строка 2: описание + влажность + sunrise/sunset */}
-            <div className="text-xs text-neutral-500 capitalize truncate pl-0.5">
-                {weather.description} · {weather.humidity}%
+            <div className="flex items-center gap-1 text-xs text-neutral-500 pl-0.5">
+                <span className="capitalize truncate">{weather.description}</span>
+                <span className="shrink-0 flex items-center gap-0.5">
+                    · <Droplets size={20} className="text-sky-500/70" /> {weather.humidity}%
+                </span>
             </div>
         </div>
     );
