@@ -24,19 +24,20 @@ export default function Weather() {
                 }
             },
             () => {
-                setError('Location access denied');
+                setError('Location denied');
                 setLoading(false);
             }
         );
     }, []);
 
     if (loading) return (
-        <div className="animate-pulse flex items-center gap-3 w-full">
-            <div className="w-8 h-8 bg-neutral-800 rounded-full shrink-0" />
-            <div className="flex flex-col gap-1">
-                <div className="h-5 w-12 bg-neutral-800 rounded" />
-                <div className="h-3 w-20 bg-neutral-800 rounded" />
+        <div className="animate-pulse flex flex-col gap-1.5 w-full">
+            <div className="flex items-center gap-2">
+                <div className="w-7 h-7 bg-neutral-800 rounded-full shrink-0" />
+                <div className="h-6 w-10 bg-neutral-800 rounded" />
+                <div className="h-4 w-24 bg-neutral-800 rounded" />
             </div>
+            <div className="h-3 w-32 bg-neutral-800 rounded" />
         </div>
     );
 
@@ -45,28 +46,24 @@ export default function Weather() {
     );
 
     return (
-        <div className="flex items-center gap-3 w-full min-w-0">
-            <div className="flex items-center gap-0.5 shrink-0">
+        <div className="flex flex-col gap-0.5 w-full min-w-0">
+            {/* строка 1: иконка + температура + город */}
+            <div className="flex items-center gap-1.5 min-w-0">
                 <img
                     src={`https://openweathermap.org/img/wn/${weather.icon}.png`}
                     alt={weather.description}
-                    className="w-8 h-8 object-contain"
+                    className="w-8 h-8 object-contain shrink-0 -ml-1"
                 />
-                <span className="text-2xl font-light text-white">
+                <span className="text-2xl font-light text-white shrink-0">
                     {weather.temp}°
                 </span>
-            </div>
-
-            <div className="flex flex-col gap-0 min-w-0">
-                <div className="text-sm text-neutral-300 font-medium truncate">
+                <span className="text-sm text-neutral-300 font-medium truncate">
                     {weather.city}
-                </div>
-                <div className="text-xs text-neutral-500 capitalize truncate">
-                    {weather.description}
-                </div>
-                <div className="text-xs text-neutral-600 truncate">
-                    {weather.humidity}% · {weather.sunrise}–{weather.sunset}
-                </div>
+                </span>
+            </div>
+            {/* строка 2: описание + влажность + sunrise/sunset */}
+            <div className="text-xs text-neutral-500 capitalize truncate pl-0.5">
+                {weather.description} · {weather.humidity}% · {weather.sunrise}–{weather.sunset}
             </div>
         </div>
     );

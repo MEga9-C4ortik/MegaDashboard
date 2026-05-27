@@ -10,7 +10,7 @@ export default function Home() {
         <main className="h-dvh bg-neutral-950 text-white p-2 overflow-hidden grid gap-2"
               style={{
                   gridTemplateColumns: 'minmax(180px, 240px) 1fr minmax(180px, 240px)',
-                  gridTemplateRows: 'auto 1fr auto',
+                  gridTemplateRows: '76px 1fr 110px',
               }}
         >
             {/* РЯД 1 */}
@@ -27,7 +27,7 @@ export default function Home() {
             </div>
 
             {/* РЯД 2 */}
-            <div className="bg-neutral-900 rounded-xl p-3 overflow-y-auto min-h-0 border border-neutral-800/50">
+            <div className="bg-neutral-900 rounded-xl p-3 overflow-y-auto scrollbar-hide min-h-0 border border-neutral-800/50">
                 <Habits />
             </div>
 
