@@ -63,7 +63,7 @@ export default function Weather() {
             </div>
             {/* строка 2: описание + влажность + sunrise/sunset */}
             <div className="text-xs text-neutral-500 capitalize truncate pl-0.5">
-                {weather.description} · {weather.humidity}% · {weather.sunrise}–{weather.sunset}
+                {weather.description} · {weather.humidity}%
             </div>
         </div>
     );
