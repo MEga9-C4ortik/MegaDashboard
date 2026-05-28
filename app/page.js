@@ -4,7 +4,7 @@ import DailyFocus from '../components/widgets/DailyFocus';
 import Habits from '../components/widgets/HabitTracker';
 import Clock from '../components/widgets/Clock';
 import Weather from '../components/widgets/Weather';
-import {Todo} from "../components/widgets/Todo";
+import Todo from "../components/widgets/Todo";
 
 export default function Home() {
     return (

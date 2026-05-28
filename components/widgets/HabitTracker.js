@@ -131,7 +131,7 @@ function HabitTracker() {
             {habits.map(habit => (
                 <div
                     key={habit.id}
-                    className="flex items-center gap-3 px-2 py-1.5 scrollbar-hide rounded-lg hover:bg-neutral-900 transition-colors group"
+                    className="flex items-center gap-3 px-2 py-1.5 scrollbar-hide rounded-lg hover:bg-neutral-800 transition-colors group"
                     onContextMenu={(e) => handleContextMenu(e, habit)}
                     onTouchStart={(e) => handleTouchStart(e, habit)}
                     onTouchEnd={handleTouchEnd}
