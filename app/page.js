@@ -4,6 +4,7 @@ import DailyFocus from '../components/widgets/DailyFocus';
 import Habits from '../components/widgets/HabitTracker';
 import Clock from '../components/widgets/Clock';
 import Weather from '../components/widgets/Weather';
+import {Todo} from "../components/widgets/Todo";
 
 export default function Home() {
     return (
@@ -32,7 +33,7 @@ export default function Home() {
             </div>
 
             <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center min-h-0 border border-neutral-800/50">
-                <span className="text-neutral-700 text-sm">Todo — coming soon</span>
+                <Todo />
             </div>
 
             <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center min-h-0 border border-neutral-800/50">
