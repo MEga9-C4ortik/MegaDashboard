@@ -23,7 +23,7 @@ export function parseBlocks(blocks) {
         } else if (block.type === "to_do") {
             currentCategory.todos.push(
                 {
-                    id: blocks.id,
+                    id: block.id,
                     name: block.to_do.rich_text[0].plain_text,
                     checked: block.to_do.checked
                 }
