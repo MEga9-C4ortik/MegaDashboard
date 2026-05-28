@@ -21,8 +21,13 @@ export function parseBlocks(blocks) {
             result.push({ category: currentCategory, todos: [] });
             currentCategory = result[result.length - 1];
         } else if (block.type === "to_do") {
-            currentCategory.todos.name = block.to_do.rich_text[0].plain_text;
-            currentCategory.todos.checked = block.to_do.checked;
+            currentCategory.todos.push(
+                {
+                    id: blocks.id,
+                    name: block.to_do.rich_text[0].plain_text,
+                    checked: block.to_do.checked
+                }
+            )
         }
     }
     return result;
