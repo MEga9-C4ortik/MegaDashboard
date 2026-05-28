@@ -32,3 +32,13 @@ export function parseBlocks(blocks) {
     }
     return result;
 }
+
+export async function PATCH(request) {
+    const { id, checked } = await request.json();
+    const todo = await notion.blocks.update({
+        block_id: id,
+        to_do: { checked: checked }
+    });
+
+    return Response.json({ ok: true });
+}
