@@ -10,8 +10,8 @@ export default function Home() {
     return (
         <main className="h-dvh bg-neutral-950 text-white p-2 overflow-hidden grid gap-2"
               style={{
-                  gridTemplateColumns: 'minmax(180px, 240px) 1fr minmax(180px, 240px)',
-                  gridTemplateRows: '76px 1fr 110px',
+                  gridTemplateColumns: '280px 1fr 300px',
+                  gridTemplateRows: '81px 1fr 180px',
               }}
         >
             {/* РЯД 1 */}
@@ -42,11 +42,11 @@ export default function Home() {
 
             {/* РЯД 3 */}
             <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
-                <span className="text-neutral-700 text-sm">Health</span>
+                <span className="text-neutral-700 text-sm">Notes</span>
             </div>
 
             <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
-                <span className="text-neutral-700 text-sm">Notes — coming soon</span>
+                <span className="text-neutral-700 text-sm">Health</span>
             </div>
 
             <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">

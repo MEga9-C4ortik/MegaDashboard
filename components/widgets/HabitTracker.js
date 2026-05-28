@@ -128,6 +128,9 @@ function HabitTracker() {
 
     return (
         <div className="flex flex-col gap-1 scrollbar-hide">
+            <h4 className="text-sm  text-neutral-200 uppercase tracking-widest font-medium px-2 mb-1">
+                Habits
+            </h4>
             {habits.map(habit => (
                 <div
                     key={habit.id}
