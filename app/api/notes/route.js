@@ -33,9 +33,39 @@ export async function GET(request) {
 export async function POST(request) {
     const {pageId, text} = await request.json();
     const note = await notion.blocks.children.append({
-       page_id: pageId,
-       text: text,
+        block_id: pageId,
+        children: [
+            {
+                type: "bulleted_list_item",
+                bulleted_list_item: {
+                    rich_text: [
+                        {
+                            type: "text",
+                            text: { content: text }
+                        }
+                    ]
+                }
+            }
+        ]
     });
 
     return Response.json({ok: true});
+}
+
+export async function PATCH(request) {
+    const { searchParams } = new URL(request.url);
+    const blockId = searchParams.get('???');
+    const { pageId, text } = await request.json();
+
+    const note = await notion.blocks.update({
+        block_id: pageId,
+        bulleted_list_item: {
+            rich_text: [
+                {
+                    type: "text",
+                    text: { content: text }
+                }
+            ]
+        }
+    });
 }
