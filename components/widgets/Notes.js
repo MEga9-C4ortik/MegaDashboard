@@ -27,4 +27,6 @@ function Notes() {
                 });
         }
     }, [categories, currentIndex]);
+
+
 }
