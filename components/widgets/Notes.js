@@ -12,4 +12,19 @@ function Notes() {
             .then(res => res.json())
             .then(setCategories);
     }, []);
+
+    useEffect(() => {
+        if (categories.length < 1) return;
+        const currCategory = categories[currentIndex];
+        if(cache[currCategory.id]){
+            setNotes(cache[currCategory.id]);
+        } else {
+            fetch(`/api/notes?pageId=${currCategory.id}`)
+                .then(res => res.json())
+                .then(data => {
+                    setNotes(data)
+                    setCache({...cache, [currCategory.id]: data})
+                });
+        }
+    }, [categories, currentIndex]);
 }
