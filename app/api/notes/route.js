@@ -75,7 +75,7 @@ export async function PATCH(request) {
 export async function DELETE(request) {
     const { searchParams } = new URL(request.url);
     const blockId = searchParams.get('blockId');
-    if (blockId) return Response.json({ error: 'id required' }, { status: 400 });
+    if (!blockId) return Response.json({ error: 'id required' }, { status: 400 });
     await notion.blocks.delete({ block_id: blockId });
     return Response.json({ok: true});
 }
