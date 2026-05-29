@@ -10,22 +10,21 @@ export async function GET(request) {
         });
 
         const bullets = response.results
-            .filter(b => b.type === "bullet_list_item")
+            .filter(b => b.type === "bulleted_list_item")
             .map(b => ({
                 id: b.id,
                 text: b.bulleted_list_item.rich_text[0].plain_text
             }));
         return Response.json(bullets);
     } else {
-        const response = await notion.blocks.children.list({
-            block_id: process.env.NOTION_NOTES
+        const response = await notion.databases.query({
+            database_id: process.env.NOTION_NOTES
         });
 
         const pages = response.results
-            .filter(b => b.type === "child_page")
             .map(b => ({
                 id: b.id,
-                title: b.child_page.title
+                title: b.properties.Name.title[0].plain_text
             }));
         return Response.json(pages);
     }
