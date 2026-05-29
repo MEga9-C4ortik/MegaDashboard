@@ -28,7 +28,7 @@ function Todo() {
     };
 
     return (
-        <div className="grid grid-cols-3 gap-3 h-full scrollbar-hide overflow-x-auto">
+        <div className="grid grid-cols-3 gap-3 h-full scrollbar-hide overflow-x-autog">
             {categories.map((category, idx) => (
                 <div key={category.category} className="flex flex-col gap-1">
                     <h3 className="text-xs text-neutral-500 uppercase tracking-widest px-2 mb-1">
