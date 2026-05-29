@@ -54,11 +54,11 @@ export async function POST(request) {
 
 export async function PATCH(request) {
     const { searchParams } = new URL(request.url);
-    const blockId = searchParams.get('???');
-    const { pageId, text } = await request.json();
+    const blockId = searchParams.get('blockId');
+    const { text } = await request.json();
 
     const note = await notion.blocks.update({
-        block_id: pageId,
+        block_id: blockId,
         bulleted_list_item: {
             rich_text: [
                 {
@@ -68,4 +68,6 @@ export async function PATCH(request) {
             ]
         }
     });
+
+    return Response.json({ok: true});
 }
