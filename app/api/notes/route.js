@@ -29,3 +29,13 @@ export async function GET(request) {
         return Response.json(pages);
     }
 }
+
+export async function POST(request) {
+    const {pageId, text} = await request.json();
+    const note = await notion.blocks.children.append({
+       page_id: pageId,
+       text: text,
+    });
+
+    return Response.json({ok: true});
+}
