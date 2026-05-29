@@ -7,5 +7,9 @@ function Notes() {
     const [notes, setNotes] = useState([]);
     const [cache, setCache] = useState({});
 
-
+    useEffect(() => {
+        fetch(`/api/notes`)
+            .then(res => res.json())
+            .then(setCategories);
+    }, []);
 }
