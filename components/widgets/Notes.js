@@ -1,11 +1,13 @@
 'use client'
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 function Notes() {
     const [categories, setCategories] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [notes, setNotes] = useState([]);
     const [cache, setCache] = useState({});
+
+    const inputRefs = useRef([]);
 
     useEffect(() => {
         fetch(`/api/notes`)
@@ -28,5 +30,26 @@ function Notes() {
         }
     }, [categories, currentIndex]);
 
+    return (
+      <div>
+          {notes.map((note, index) => (
+              <input
+                  key={note.id}
+                  ref={el => inputRefs.current[index] = el}
+                  value={note.text}
+                  onChange={...}
+                  onKeyDown={e => {
+                      if (e.key === 'Enter'){
 
+                      } else if (e.key === 'Backspace' && note.text === ''){
+
+                      }
+                      else {
+
+                      }
+                  }}
+              />
+          ))}
+      </div>
+    );
 }
