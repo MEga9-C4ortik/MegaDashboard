@@ -31,25 +31,33 @@ function Notes() {
     }, [categories, currentIndex]);
 
     return (
-      <div>
-          {notes.map((note, index) => (
-              <input
-                  key={note.id}
-                  ref={el => inputRefs.current[index] = el}
-                  value={note.text}
-                  onChange={...}
-                  onKeyDown={e => {
-                      if (e.key === 'Enter'){
+        <div>
+            {notes.map((note, index) => (
+                <input
+                    key={note.id}
+                    ref={el => inputRefs.current[index] = el}
+                    value={note.text}
+                    onChange={e => setNotes(notes.map((n, i) =>
+                        i !==index ? n : {...n, text: e.target.value}
+                    ))}
+                    onKeyDown={e => {
+                        if (e.key === 'Enter'){
 
-                      } else if (e.key === 'Backspace' && note.text === ''){
+                        } else if (e.key === 'Backspace' && note.text === ''){
+                            e.preventDefault();
+                            notes.filter((_, i) => i !== index);
+                            fetch(`/api/notes?pageId=${note.id}`, {
+                                    method: 'DELETE',
+                                }.then(res => res.json())
+                            );
+                            if(index > 0) index--;
+                        }
+                        else {
 
-                      }
-                      else {
-
-                      }
-                  }}
-              />
-          ))}
-      </div>
+                        }
+                    }}
+                />
+            ))}
+        </div>
     );
 }
