@@ -45,15 +45,17 @@ function Notes() {
                             e.preventDefault();
                             fetch(`/api/notes?pageId?=${categories[currentIndex].id}`, {
                                 method: 'POST',
-                                note_id: currentIndex,
-                                text: e.target.value
+                                body: JSON.stringify({
+                                    text: note.text,
+                                    noteId: currentIndex,
+                                })
                             });
                             setNotes([]);
                             setTimeout(() => inputRefs.current[index + 1].focus(), 0);
                         } else if (e.key === 'Backspace' && note.text === ''){
                             e.preventDefault();
                             setNotes(notes.filter((_, i) => i !== index));
-                            fetch(`/api/notes?pageId=${note.id}`, {
+                            fetch(`/api/notes?blockId=${note.id}`, {
                                     method: 'DELETE',
                                 }).then(res => res.json());
                             if(index > 0)

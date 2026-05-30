@@ -49,7 +49,7 @@ export async function POST(request) {
         ]
     });
 
-    return Response.json({ok: true});
+    return Response.json(note.results[0]);
 }
 
 export async function PATCH(request) {
