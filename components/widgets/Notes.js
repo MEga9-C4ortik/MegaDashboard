@@ -30,6 +30,8 @@ function Notes() {
         }
     }, [categories, currentIndex]);
 
+    const currCategory = categories[currentIndex];
+
     return (
         <div>
             {notes.map((note, index) => (
@@ -43,11 +45,11 @@ function Notes() {
                     onKeyDown={e => {
                         if (e.key === 'Enter'){
                             e.preventDefault();
-                            fetch(`/api/notes?pageId=${categories[currentIndex].id}`, {
+                            fetch(`/api/notes?pageId=${currCategory?.id}`, {
                                 method: 'POST',
                                 body: JSON.stringify({
                                     text: "",
-                                    pageId: currCategory.id
+                                    pageId: currCategory?.id
                                 })
                             })
                                 .then(res => res.json())
@@ -79,3 +81,5 @@ function Notes() {
         </div>
     );
 }
+
+export default Notes;
