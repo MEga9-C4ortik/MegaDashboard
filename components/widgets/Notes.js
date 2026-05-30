@@ -43,21 +43,30 @@ function Notes() {
                     onKeyDown={e => {
                         if (e.key === 'Enter'){
                             e.preventDefault();
-                            fetch(`/api/notes?pageId?=${categories[currentIndex].id}`, {
+                            fetch(`/api/notes?pageId=${categories[currentIndex].id}`, {
                                 method: 'POST',
                                 body: JSON.stringify({
-                                    text: note.text,
-                                    noteId: currentIndex,
+                                    text: "",
+                                    pageId: currCategory.id
                                 })
-                            });
-                            setNotes([]);
-                            setTimeout(() => inputRefs.current[index + 1].focus(), 0);
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    const newNote = { id: data.id, text: "" };
+                                    const newNotes = [
+                                        ...notes.slice(0, index + 1),
+                                        newNote,
+                                        ...notes.slice(index + 1)
+                                    ];
+                                    setNotes(newNotes);
+                                    setTimeout(() => inputRefs.current[index + 1].focus(), 0);
+                                });
                         } else if (e.key === 'Backspace' && note.text === ''){
                             e.preventDefault();
                             setNotes(notes.filter((_, i) => i !== index));
                             fetch(`/api/notes?blockId=${note.id}`, {
-                                    method: 'DELETE',
-                                }).then(res => res.json());
+                                method: 'DELETE',
+                            }).then(res => res.json());
                             if(index > 0)
                                 setTimeout(() => inputRefs.current[index - 1].focus(), 0);
                         }
