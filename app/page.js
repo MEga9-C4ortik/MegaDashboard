@@ -11,8 +11,8 @@ export default function Home() {
     return (
         <main className="h-dvh bg-neutral-950 text-white p-2 overflow-hidden grid gap-2"
               style={{
-                  gridTemplateColumns: '280px 1fr 300px',
-                  gridTemplateRows: '81px 1fr 180px',
+                  gridTemplateColumns: '300px 1fr 350px',
+                  gridTemplateRows: '81px 1fr 220px',
               }}
         >
             {/* Raw 1 */}
