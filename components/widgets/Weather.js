@@ -46,14 +46,14 @@ export default function Weather() {
     return (
         <div className="flex flex-col gap-0.5 w-full min-w-100">
             {/* Raw 1 */}
-            <div className="flex items-center gap-3 min-w-0">
+            <div className="flex items-center min-w-0">
                 <img
                     src={`https://openweathermap.org/img/wn/${weather.icon}.png`}
                     alt={weather.description}
-                    className="w-12 h-12 object-contain shrink-0 -ml-1"
+                    className="w-9 h-9 object-contain"
                 />
                 <span className="text-2xl font-light text-white shrink-0">{weather.temp}°</span>
-                <span className="flex items-center ml-2 gap-1">
+                <span className="flex items-center mx-2 gap-1">
                     <Droplets size={24} className="text-sky-500/70" /> {weather.humidity}%
                 </span>
                 <span className="text-sm text-neutral-300 font-medium truncate">{weather.city}</span>

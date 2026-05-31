@@ -36,7 +36,6 @@ function Notes() {
     return (
         <div className="flex flex-col h-full w-full gap-1">
 
-            {/* Навигация */}
             <div className="flex items-center justify-between px-2 mb-1 shrink-0">
                 <button
                     onClick={() => setCurrentIndex(i => Math.max(0, i - 1))}
@@ -59,7 +58,6 @@ function Notes() {
                 </button>
             </div>
 
-            {/* Список буллетов */}
             <div className="flex-1 overflow-y-auto scrollbar-hide min-h-0 flex flex-col gap-0.5">
                 {notes.map((note, index) => (
                     <div
@@ -71,7 +69,7 @@ function Notes() {
                             ref={el => inputRefs.current[index] = el}
                             value={note.text}
                             className="bg-transparent outline-none text-sm text-neutral-300 w-full placeholder-neutral-700 focus:text-white transition-colors"
-                            placeholder="..."
+                            placeholder="...note"
                             onChange={e => setNotes(notes.map((n, i) =>
                                 i !== index ? n : {...n, text: e.target.value}
                             ))}
@@ -115,7 +113,6 @@ function Notes() {
                     </div>
                 ))}
             </div>
-
         </div>
     );
 }
