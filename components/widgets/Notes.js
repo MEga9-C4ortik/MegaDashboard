@@ -31,6 +31,23 @@ function Notes() {
         }
     }, [categories, currentIndex, cache]);
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            const tag = document.activeElement?.tagName;
+            if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+            if (e.key === 'ArrowLeft') {
+                setCurrentIndex(i => (i - 1 + categories.length) % categories.length);
+            }
+            if (e.key === 'ArrowRight') {
+                setCurrentIndex(i => (i + 1) % categories.length);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [categories.length]);
+
     const currCategory = categories[currentIndex];
 
     return (
