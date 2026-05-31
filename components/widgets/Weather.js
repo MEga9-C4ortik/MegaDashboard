@@ -48,7 +48,7 @@ export default function Weather() {
             {/* Raw 1 */}
             <div className="flex items-center min-w-0">
                 <img
-                    src={`https://openweathermap.org/img/wn/${weather.icon}.png`}
+                    src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
                     alt={weather.description}
                     className="w-9 h-9 object-contain"
                 />

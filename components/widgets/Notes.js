@@ -55,7 +55,7 @@ function Notes() {
             <div className="flex items-center justify-between px-2 mb-1 shrink-0">
                 <button
                     onClick={() => setCurrentIndex(i => (i - 1 + categories.length) % categories.length)}
-                    className="text-neutral-600 hover:text-neutral-300 transition-colors text-base leading-none cursor-pointer disabled:opacity-20"
+                    className="text-neutral-600 hover:text-neutral-300 transition-colors text-base leading-none cursor-pointer disabled:opacity-20 focus:outline-none"
                 >
                     ←
                 </button>
@@ -66,7 +66,7 @@ function Notes() {
 
                 <button
                     onClick={() => setCurrentIndex(i => (i + 1) % categories.length)}
-                    className="text-neutral-600 hover:text-neutral-300 transition-colors text-base leading-none cursor-pointer disabled:opacity-20"
+                    className="text-neutral-600 hover:text-neutral-300 transition-colors text-base leading-none cursor-pointer disabled:opacity-20 focus:outline-none"
                 >
                     →
                 </button>
