@@ -35,7 +35,6 @@ function Notes() {
 
     return (
         <div className="flex flex-col h-full w-full gap-1">
-
             <div className="flex items-center justify-between px-2 mb-1 shrink-0">
                 <button
                     onClick={() => setCurrentIndex(i => Math.max(0, i - 1))}
