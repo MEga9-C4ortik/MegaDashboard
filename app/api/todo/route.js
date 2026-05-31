@@ -5,6 +5,7 @@ export async function GET() {
         database_id: process.env.NOTION_WEEK_PLAN,
     });
     const currentWeek = response.results.find(page => page.properties.Status.status.name === "In progress");
+    if (!currentWeek) return Response.json([], { status: 200 });
     const currentWeekId = currentWeek.id;
     const blocks = await notion.blocks.children.list({ block_id: currentWeekId })
 
