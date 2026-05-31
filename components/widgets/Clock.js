@@ -36,40 +36,43 @@ export default function Clock() {
     const yearProgress = Math.round((dayOfYear / totalDays) * 100);
 
     return (
-        <div>
-            <div className="text-xs text-neutral-100 tracking-widest uppercase leading-relaxed">
-                <div>
+        <div className="flex flex-col justify-center gap-0.5 w-full">
+
+            {/* Ряд 1 — дата + неделя */}
+            <div className="flex items-baseline justify-between">
+                <span className="text-xs text-neutral-100 font-medium tracking-widest uppercase">
                     {now.toLocaleDateString("en-US", {
                         weekday: "short",
                         month: "long",
                         day: "numeric",
                         year: "numeric"
                     }).replaceAll(",", " ")}
-                </div>
-                <div className="text-lg font-medium mt-0.5">
+                </span>
+                <span className="text-xs text-neutral-300 tracking-widest uppercase shrink-0 ml-2">
+                    W{week}
+                </span>
+            </div>
+
+            <div className="flex items-center gap-2">
+                <span className="text-lg font-medium text-neutral-100 shrink-0 tabular-nums mr-3">
                     {now.toLocaleTimeString("en-US", {
                         hour: "2-digit",
                         minute: "2-digit",
                         second: "2-digit",
                         hour12: false
                     })}
-                </div>
-            </div>
-
-            <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-xs text-neutral-600 tracking-widest uppercase shrink-0">
-                    W{week}
                 </span>
-                <div className="flex-1 h-px bg-neutral-800 relative overflow-hidden rounded-full">
+                <div className="flex-1 h-px bg-neutral-600 relative overflow-hidden rounded-full">
                     <div
-                        className="absolute left-0 top-0 h-full bg-neutral-600 rounded-full transition-all"
+                        className="absolute left-0 top-0 h-full bg-neutral-200 rounded-full"
                         style={{ width: `${yearProgress}%` }}
                     />
                 </div>
-                <span className="text-xs text-neutral-600 tabular-nums shrink-0">
+                <span className="text-xs text-neutral-100 tabular-nums shrink-0">
                     {yearProgress}%
                 </span>
             </div>
+
         </div>
     );
 }
