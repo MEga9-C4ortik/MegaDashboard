@@ -20,15 +20,16 @@ function Notes() {
         const currCategory = categories[currentIndex];
         if(cache[currCategory.id]){
             setNotes(cache[currCategory.id]);
+            return;
         } else {
             fetch(`/api/notes?pageId=${currCategory.id}`)
                 .then(res => res.json())
                 .then(data => {
                     setNotes(data)
-                    setCache({...cache, [currCategory.id]: data})
+                    setCache(prev => ({...prev, [currCategory.id]: data}))
                 });
         }
-    }, [categories, currentIndex]);
+    }, [categories, currentIndex, cache]);
 
     const currCategory = categories[currentIndex];
 
@@ -42,11 +43,19 @@ function Notes() {
                     onChange={e => setNotes(notes.map((n, i) =>
                         i !==index ? n : {...n, text: e.target.value}
                     ))}
+                    onBlur={() => {
+                        fetch(`/api/notes?blockId=${note.id}`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ text: note.text })
+                        });
+                    }}
                     onKeyDown={e => {
                         if (e.key === 'Enter'){
                             e.preventDefault();
                             fetch(`/api/notes?pageId=${currCategory?.id}`, {
                                 method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
                                     text: "",
                                     pageId: currCategory?.id
@@ -66,14 +75,12 @@ function Notes() {
                         } else if (e.key === 'Backspace' && note.text === ''){
                             e.preventDefault();
                             setNotes(notes.filter((_, i) => i !== index));
+                            inputRefs.current = [];
                             fetch(`/api/notes?blockId=${note.id}`, {
                                 method: 'DELETE',
                             }).then(res => res.json());
                             if(index > 0)
                                 setTimeout(() => inputRefs.current[index - 1].focus(), 0);
-                        }
-                        else {
-
                         }
                     }}
                 />
