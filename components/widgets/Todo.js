@@ -28,7 +28,7 @@ function Todo() {
     };
 
     return (
-        <div className="grid grid-cols-3 gap-3 h-full scrollbar-hide overflow-x-autog">
+        <div className="grid grid-cols-3 gap-3 h-full scrollbar-hide overflow-y-auto">
             {categories.map((category, idx) => (
                 <div key={category.category} className="flex flex-col gap-1">
                     <h3 className="text-xs text-neutral-500 uppercase tracking-widest px-2 mb-1">
@@ -37,7 +37,7 @@ function Todo() {
                     {category.todos.map(todo => (
                         <div
                             key={todo.id}
-                            className="flex items-center gap-2 px-2 py-1.5 rounded-lg scrollbar-hide hover:bg-neutral-800 transition-colors cursor-pointer"
+                            className="flex items-center gap-2 px-2 py-1.5 overflow-y-auto rounded-lg scrollbar-hide hover:bg-neutral-800 transition-colors cursor-pointer"
                             onClick={() => toggleTodo(idx, todo.id, todo.checked)}
                         >
                             <div className={`w-4 h-4 rounded-sm border shrink-0 transition-colors ${

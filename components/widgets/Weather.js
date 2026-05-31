@@ -50,7 +50,7 @@ export default function Weather() {
                 <img
                     src={`https://openweathermap.org/img/wn/${weather.icon}.png`}
                     alt={weather.description}
-                    className="w-8 h-8 object-contain shrink-0 -ml-1"
+                    className="w-12 h-12 object-contain shrink-0 -ml-1"
                 />
                 <span className="text-2xl font-light text-white shrink-0">{weather.temp}°</span>
                 <span className="flex items-center ml-2 gap-1">
