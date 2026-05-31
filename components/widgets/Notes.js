@@ -37,7 +37,7 @@ function Notes() {
         <div className="flex flex-col h-full w-full gap-1">
             <div className="flex items-center justify-between px-2 mb-1 shrink-0">
                 <button
-                    onClick={() => setCurrentIndex(i => Math.max(0, i - 1))}
+                    onClick={() => setCurrentIndex(i => (i - 1 + categories.length) % categories.length)}
                     className="text-neutral-600 hover:text-neutral-300 transition-colors text-base leading-none cursor-pointer disabled:opacity-20"
                 >
                     ←
@@ -48,7 +48,7 @@ function Notes() {
                 </span>
 
                 <button
-                    onClick={() => setCurrentIndex(i => Math.min(categories.length - 1, i + 1))}
+                    onClick={() => setCurrentIndex(i => (i + 1) % categories.length)}
                     className="text-neutral-600 hover:text-neutral-300 transition-colors text-base leading-none cursor-pointer disabled:opacity-20"
                 >
                     →
