@@ -39,7 +39,6 @@ function Notes() {
                 <button
                     onClick={() => setCurrentIndex(i => Math.max(0, i - 1))}
                     className="text-neutral-600 hover:text-neutral-300 transition-colors text-base leading-none cursor-pointer disabled:opacity-20"
-                    disabled={currentIndex === 0}
                 >
                     ←
                 </button>
@@ -51,7 +50,6 @@ function Notes() {
                 <button
                     onClick={() => setCurrentIndex(i => Math.min(categories.length - 1, i + 1))}
                     className="text-neutral-600 hover:text-neutral-300 transition-colors text-base leading-none cursor-pointer disabled:opacity-20"
-                    disabled={currentIndex === categories.length - 1}
                 >
                     →
                 </button>

@@ -60,7 +60,7 @@ export default function Weather() {
             </div>
 
             {/* Raw 2 */}
-            <div className="flex items-center gap-3 pb-1.5 text-xs text-neutral-200 pl-0.5 flex-wrap">
+            <div className="flex items-center gap-3 pb-1.5 pl-0.5 pr-3 text-xs text-neutral-200 flex-wrap">
                 <span className="capitalize mr-2">{weather.description}</span>
 
                 <span className="flex items-center gap-1">
