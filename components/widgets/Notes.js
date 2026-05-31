@@ -35,6 +35,12 @@ function Notes() {
 
     return (
         <div>
+            <div className="flex items-center justify-between">
+                <button onClick={() => setCurrentIndex(i => Math.max(0, i - 1))}>←</button>
+                <span>{currCategory?.title}</span>
+                <button onClick={() => setCurrentIndex(i => Math.min(categories.length - 1, i + 1))}>→</button>
+            </div>
+
             {notes.map((note, index) => (
                 <input
                     key={note.id}
