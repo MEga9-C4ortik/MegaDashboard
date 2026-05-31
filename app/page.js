@@ -15,7 +15,7 @@ export default function Home() {
                   gridTemplateRows: '81px 1fr 180px',
               }}
         >
-            {/* РЯД 1 */}
+            {/* Raw 1 */}
             <div className="bg-neutral-900 rounded-xl px-4 py-3 flex items-center overflow-hidden border border-neutral-800/50">
                 <Clock />
             </div>
@@ -28,7 +28,7 @@ export default function Home() {
                 <Weather />
             </div>
 
-            {/* РЯД 2 */}
+            {/* Raw 2 */}
             <div className="bg-neutral-900 rounded-xl p-3 overflow-y-auto scrollbar-hide min-h-0 border border-neutral-800/50">
                 <Habits />
             </div>
@@ -41,11 +41,9 @@ export default function Home() {
                 <span className="text-neutral-700 text-sm">Calendar — coming soon</span>
             </div>
 
-            {/* РЯД 3 */}
-            <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
-                <div className="...">
-                    <Notes />
-                </div>
+            {/* Raw 3 */}
+            <div className="bg-neutral-900 rounded-xl p-3 overflow-hidden border border-neutral-800/50 flex flex-col">
+                <Notes />
             </div>
 
             <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
