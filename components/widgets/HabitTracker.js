@@ -23,7 +23,9 @@ function HabitTracker() {
     const [habits, setHabits] = useState([]);
 
     useEffect(() => {
-        fetch('/api/habits')
+        const current = getCurrentPeriod();
+        const previous = getPreviousPeriod();
+        fetch(`/api/habits?current=${current}&previous=${previous}`)
             .then(r => r.json())
             .then(setHabits);
     }, []);

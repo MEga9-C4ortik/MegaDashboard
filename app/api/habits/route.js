@@ -16,13 +16,15 @@ function getPreviousPeriod() {
     return new Date(Date.now() - 86400000).toLocaleDateString('en-CA');
 }
 
-export async function GET() {
+export async function GET(request) {
+    const { searchParams } = new URL(request.url);
+
     const habits = await prisma.habit.findMany({
         orderBy: { createdAt: 'asc' }
     });
 
-    const currentPeriod = getCurrentPeriod();
-    const previousPeriod = getPreviousPeriod();
+    const currentPeriod = searchParams.get('current') || getCurrentPeriod();
+    const previousPeriod = searchParams.get('previous') || getPreviousPeriod();
 
     // сбрасываем стрики для пропущенных привычек
     const toReset = habits.filter(h =>
