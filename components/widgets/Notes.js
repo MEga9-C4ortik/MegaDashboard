@@ -5,7 +5,7 @@ function Notes() {
     const [categories, setCategories] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [notes, setNotes] = useState([]);
-    const [cache, setCache] = useState({});
+    const cache = useRef({});
 
     const inputRefs = useRef([]);
 
@@ -19,17 +19,17 @@ function Notes() {
         if (categories.length < 1) return;
         const currCategory = categories[currentIndex];
         if (cache[currCategory.id]) {
-            setNotes(cache[currCategory.id]);
+            setNotes(cache.current[currCategory.id]);
             return;
         } else {
             fetch(`/api/notes?pageId=${currCategory.id}`)
                 .then(res => res.json())
                 .then(data => {
                     setNotes(data);
-                    setCache(prev => ({...prev, [currCategory.id]: data}));
+                    cache.current[currCategory.id] = data;
                 });
         }
-    }, [categories, currentIndex, cache]);
+    }, [categories, currentIndex]);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
