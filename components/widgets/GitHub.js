@@ -81,10 +81,10 @@ export default function GitHub () {
             </div>
 
             {data.lastCommit && (
-                <div className="flex flex-col gap-0.5 min-w-0 shrink-0">
-                    <span className="text-xs text-neutral-300">
-                        {data.lastCommit.message}  {timeAgo(data.lastCommit.date)} | {data.lastCommit.repo}
-                    </span>
+                <div className="flex items-center gap-1 text-xs text-neutral-300 shrink-0">
+                    <span className="truncate text-neutral-300">{data.lastCommit.message}</span>
+                    <span className="shrink-0 text-neutral-500">· {timeAgo(data.lastCommit.date)}</span>
+                    {data.lastCommit.repo}
                 </div>
             )}
         </div>
