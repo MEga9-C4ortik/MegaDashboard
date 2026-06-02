@@ -46,6 +46,7 @@ export async function GET() {
 
     const allDays = user.contributionsCollection.contributionCalendar.weeks
         .flatMap(week => week.contributionDays);
+    let streak = 0;
     let i = allDays.length - 1;
     if (allDays[i]?.contributionCount === 0) i--;
     for (; i >= 0; i--) {
@@ -62,6 +63,7 @@ export async function GET() {
     } : null;
 
     return Response.json({
+        username: user.login,
         totalContributions: user.contributionsCollection.contributionCalendar.totalContributions,
         streak: streak,
         weeks: user.contributionsCollection.contributionCalendar.weeks,
