@@ -5,7 +5,7 @@ function timeAgo (dateStr) {
     const diff = Date.now() - new Date(dateStr).getTime();
     const minutes = Math.floor(diff / 60000);
     const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff % 86400000);
+    const days = Math.floor(diff / 86400000);
     if (minutes < 60) return `${minutes}m ago`;
     if (hours < 24) return `${hours}h ago`;
     return `${days}days ago`;
@@ -30,7 +30,7 @@ export default function GitHub () {
     }, []);
 
     if (!data) return (
-        <div className="animate-pulse flex flex-colgap-2 w-full h-full">
+        <div className="animate-pulse flex flex-col gap-2 w-full h-full">
             <div className="w-24 h-4 bg-neutral-800 rounded"></div>
             <div className="flex-1 bg-neutral-800 rounded"></div>
             <div className="w-40 h-3 bg-neutral-800 rounded"></div>
@@ -54,9 +54,9 @@ export default function GitHub () {
                     <div key={wi} className="flex flex-col gap-0.5">
                         {week.contributionDays.map((day, di) => (
                             <div
-                                key={day}
+                                key={day.date}
                                 className={`w-3 h-3 rounded-sm cursor-pointer
-                                    transition-opacity hover: opacity-70
+                                    transition-opacity hover:opacity-70
                                     ${getColour(day.contributionCount)}`}
                                 onClick={() => setHoverDay(
                                     hoverDay?.date === day.date ? null : day

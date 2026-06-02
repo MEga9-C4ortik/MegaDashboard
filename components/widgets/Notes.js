@@ -18,7 +18,7 @@ function Notes() {
     useEffect(() => {
         if (categories.length < 1) return;
         const currCategory = categories[currentIndex];
-        if (cache[currCategory.id]) {
+        if (cache.current[currCategory.id]) {
             setNotes(cache.current[currCategory.id]);
             return;
         } else {
