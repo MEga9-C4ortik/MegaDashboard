@@ -41,21 +41,34 @@ export default function GitHub () {
     const weeks = data.weeks.slice(-20);
 
     return (
-        <div className="flex flex-col h-full w-full gap-2">
-            <div>
+        <div className="flex flex-col h-full w-full gap-0.5">
+            <div className="flex items-center justify-between gap-5 shrink-0">
                 <h4 className="text-sm text-neutral-200 uppercase tracking-wide font-medium">
                     GitHub
                 </h4>
-                <span className="text-xs text-neutral-600">@{data.username}</span>
+                {hoverDay ? (
+                    <span className="text-xs text-neutral-500">
+                        <span className="text-neutral-200">{hoverDay.contributionCount}</span> commits · {hoverDay.date}
+                    </span>
+                ) : (
+                    <span className="text-xs text-neutral-300 gap-3">
+                        <span className="text-neutral-200">
+                            {data.streak}d
+                        </span> streak {' '}
+                        <span className="text-neutral-200">
+                            {' | '}{data.totalContributions}
+                        </span> this year
+                    </span>
+                )}
             </div>
 
-            <div className="flex gap-0.5 shrink-0">
+            <div className="flex gap-0.5 shrink-0 overflow-x-auto scrollbar-hide">
                 {weeks.map((week, wi) => (
                     <div key={wi} className="flex flex-col gap-0.5">
                         {week.contributionDays.map((day, di) => (
                             <div
                                 key={day.date}
-                                className={`w-3 h-3 rounded-sm cursor-pointer
+                                className={`w-2.5 h-2.5 rounded-sm cursor-pointer
                                     transition-opacity hover:opacity-70
                                     ${getColour(day.contributionCount)}`}
                                 onClick={() => setHoverDay(
@@ -67,32 +80,10 @@ export default function GitHub () {
                 ))}
             </div>
 
-            <div className="text-xs text-neutral-500 shrink-0 h-4">
-                {hoverDay ? (
-                    <span>
-                        <span className="text-neutral-200">
-                            {hoverDay.contributionCount}
-                        </span>
-                        {' '}commits . {hoverDay.date}
-                    </span>
-                ) : (
-                    <span>
-                        <span className="text-neutral-200">{data.streak}d</span>
-                        streak {' . '}
-                        <span className="text-neutral-200">{data.totalContributions}</span>
-                        this year
-                    </span>
-                )
-                }
-            </div>
-
             {data.lastCommit && (
-                <div className="flex flex-col gap-0.5 min-w-0 shrink-0 mt-auto">
-                    <span className="text-xs text-neutral-600 truncate">
-                        {data.lastCommit.repo} . {timeAgo(data.lastCommit.date)}
-                    </span>
-                    <span className="text-xs text-neutral-400 truncate">
-                        {data.lastCommit.message}
+                <div className="flex flex-col gap-0.5 min-w-0 shrink-0">
+                    <span className="text-xs text-neutral-300">
+                        {data.lastCommit.message}  {timeAgo(data.lastCommit.date)} | {data.lastCommit.repo}
                     </span>
                 </div>
             )}
