@@ -5,7 +5,8 @@ import Habits from '../components/widgets/HabitTracker';
 import Clock from '../components/widgets/Clock';
 import Weather from '../components/widgets/Weather';
 import Todo from "../components/widgets/Todo";
-import Notes from "@/components/widgets/Notes";
+import Notes from "../components/widgets/Notes";
+import GitHub from "../components/widgets/GitHub";
 
 export default function Home() {
     return (
@@ -51,7 +52,7 @@ export default function Home() {
             </div>
 
             <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center border border-neutral-800/50">
-                <span className="text-neutral-700 text-sm">Currency</span>
+                <GitHub />
             </div>
         </main>
     )
