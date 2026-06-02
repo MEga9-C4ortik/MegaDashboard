@@ -46,18 +46,23 @@ export async function GET() {
 
     const allDays = user.contributionsCollection.contributionCalendar.weeks
         .flatMap(week => week.contributionDays);
-    let streak = 0;
-    for (let i = allDays.length - 1; i > 0; i--) {
+    let i = allDays.length - 1;
+    if (allDays[i]?.contributionCount === 0) i--;
+    for (; i >= 0; i--) {
         if (allDays[i].contributionCount > 0) streak++;
         else break;
     }
 
     const lastCommitRepo = user.repositories.nodes
         .find(repo => repo.defaultBranchRef?.target?.history?.nodes?.[0]);
-    const lastCommit = lastCommitRepo?.defaultBranchRef.target.history.nodes[0];
+    const lastCommit = lastCommitRepo ? {
+        message: lastCommitRepo.defaultBranchRef.target.history.nodes[0].message,
+        date: lastCommitRepo.defaultBranchRef.target.history.nodes[0].committedDate,
+        repo: lastCommitRepo.name
+    } : null;
 
     return Response.json({
-        totalContributions: user.contributionsCollection.totalContributions,
+        totalContributions: user.contributionsCollection.contributionCalendar.totalContributions,
         streak: streak,
         weeks: user.contributionsCollection.contributionCalendar.weeks,
         lastCommit: lastCommit,
