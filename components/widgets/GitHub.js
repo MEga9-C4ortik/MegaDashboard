@@ -43,9 +43,10 @@ export default function GitHub () {
     return (
         <div className="flex flex-col h-full w-full gap-0.5">
             <div className="flex items-center justify-between gap-5 shrink-0">
-                <h4 className="text-sm text-neutral-200 uppercase tracking-wide font-medium">
+                <a href="https://github.com/MEga9-C4ortik" target="_blank"
+                   className="text-sm text-neutral-200 uppercase tracking-wide font-medium">
                     GitHub
-                </h4>
+                </a>
                 {hoverDay ? (
                     <span className="text-xs text-neutral-500">
                         <span className="text-neutral-200">{hoverDay.contributionCount}</span> commits · {hoverDay.date}
