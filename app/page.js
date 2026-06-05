@@ -7,6 +7,7 @@ import Weather from '../components/widgets/Weather';
 import Todo from "../components/widgets/Todo";
 import Notes from "../components/widgets/Notes";
 import GitHub from "../components/widgets/GitHub";
+import Calendar from '../components/widgets/Calendar';
 
 export default function Home() {
     return (
@@ -39,7 +40,7 @@ export default function Home() {
             </div>
 
             <div className="bg-neutral-900 rounded-xl p-3 flex items-center justify-center min-h-0 border border-neutral-800/50">
-                <span className="text-neutral-700 text-sm">Calendar — coming soon</span>
+                <Calendar />
             </div>
 
             {/* Raw 3 */}

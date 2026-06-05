@@ -25,13 +25,19 @@ export default function Calendar() {
             });
     }, [selectedDate]);
 
+    const changeDay = (delta) => {
+        const date = new Date(selectedDate);
+        date.setDate(date.getDate() + delta);
+        setSelectedDate(date.toLocaleDateString("en-CA"));
+    };
+
     return (
         <div className="flex flex-col h-full w-full gap-2">
             {/* Header */}
             <div className="flex items-center justify-between shrink-0">
-                <button onClick={() => {/* предыдущий день */}}>←</button>
+                <button onClick={() => changeDay(-1)}>←</button>
                 <span onClick={() => setView(true)}>{selectedDate}</span>
-                <button onClick={() => {/* следующий день */}}>→</button>
+                <button onClick={() => changeDay(+1)}>→</button>
             </div>
 
             {/* Events */}
