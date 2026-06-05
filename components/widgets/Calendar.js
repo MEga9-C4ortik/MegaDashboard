@@ -92,7 +92,7 @@ export default function Calendar() {
                         const startMin = timeToMinutes(event.start.dateTime);
                         const endMin = timeToMinutes(event.end.dateTime);
                         const top = startMin * 0.75;
-                        const height = ((endMin - startMin) * 0.75;
+                        const height = (endMin - startMin) * 0.75;
                         const color = event.colorId ?? 'default';
                         return (
                             <div key={event.id}
