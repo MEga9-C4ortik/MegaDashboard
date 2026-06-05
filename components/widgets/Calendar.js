@@ -44,6 +44,20 @@ export default function Calendar() {
         setSelectedDate(date.toLocaleDateString("en-CA"));
     };
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            e.preventDefault();
+            const tag = document.activeElement?.tagName;
+            if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+            if (e.code === 'KeyA') changeDay(-1);
+            if (e.code === 'KeyD') changeDay(1);
+        }
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [selectedDate]);
+
     return (
         <div className="flex flex-col h-full w-full gap-2">
             {/* Header */}
