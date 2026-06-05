@@ -10,11 +10,18 @@ oauth2Client.setCredentials({
     refresh_token: process.env.GOOGLE_REFRESH_TOKEN
 });
 
-export async function GET() {
+export async function GET(request) {
+    const { searchParams } = new URL(request.url);
+    const date = searchParams.get('date');
+
+    const timeMin = new Date(`${date}T00:00:00+08:00`).toISOString();
+    const timeMax = new Date(`${date}T23:59:59+08:00`).toISOString();
+
     const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
     const res = await calendar.events.list({
         calendarId: 'primary',
-        timeMin: new Date().toISOString(),
+        timeMin: timeMin,
+        timeMax: timeMax,
         maxResults: 100,
         singleEvents: true,
         orderBy: 'startTime',
