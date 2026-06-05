@@ -1,10 +1,16 @@
 import { useRef, useState, useEffect } from "react";
-const COLORS = {
-    '1': '#7986cb', '2': '#33b679', '3': '#8e24aa',
-    '4': '#e67c73', '5': '#f6c026', '6': '#f5511d',
-    '7': '#039be5', '8': '#616161', '9': '#3f51b5',
-    '10': '#0b8043', '11': '#d60000',
-    default: '#4285f4'
+const GCal_COLORS = {
+    '1': '#7986cb',  // Lavender
+    '2': '#33b679',  // Sage
+    '3': '#8e24aa',  // Grape
+    '4': '#e67c73',  // Flamingo
+    '5': '#f6c026',  // Banana
+    '6': '#f5511d',  // Tangerine
+    '7': '#039be5',  // Peacock
+    '8': '#616161',  // Graphite
+    '9': '#3f51b5',  // Blueberry
+    '10': '#0b8043', // Basil
+    '11': '#d60000', // Tomato
 };
 
 export default function Calendar() {
@@ -38,6 +44,9 @@ export default function Calendar() {
         const minutes =  new Date(dateTimeStr).getMinutes();
         return hours * 60 + minutes;
     }
+
+    const getEventColor = (event) =>
+        GCal_COLORS[event.colorId] ?? '#4285f4';
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -100,7 +109,8 @@ export default function Calendar() {
                                      top: `${top}%`,
                                      height: `${height}%`,
                                      left: '2.5rem',
-                                     color: color,
+                                     backgroundColor: getEventColor(event) + '40', // 40 = 25% opacity
+                                     borderLeft: `2px solid ${getEventColor(event)}`,
                                 }}
                                  className="absolute right-0 rounded px-1 text-xs">
                                 {event.summary}
