@@ -6,6 +6,7 @@ export default function Calendar() {
     const [loading, setLoading] = useState(true);
     const [view , setView] = useState(false);
     const cache = useRef({});
+    const scrollRef = useRef(null);
 
     useEffect(() => {
         const dateStr = selectedDate;
@@ -25,17 +26,23 @@ export default function Calendar() {
             });
     }, [selectedDate]);
 
-    const changeDay = (delta) => {
-        const date = new Date(selectedDate);
-        date.setDate(date.getDate() + delta);
-        setSelectedDate(date.toLocaleDateString("en-CA"));
-    };
-
     const timeToMinutes = (dateTimeStr) => {
         const hours =  new Date(dateTimeStr).getHours();
         const minutes =  new Date(dateTimeStr).getMinutes();
         return hours * 60 + minutes;
     }
+
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = timeToMinutes(new Date()) - 200;
+        }
+    }, []);
+
+    const changeDay = (delta) => {
+        const date = new Date(selectedDate);
+        date.setDate(date.getDate() + delta);
+        setSelectedDate(date.toLocaleDateString("en-CA"));
+    };
 
     return (
         <div className="flex flex-col h-full w-full gap-2">
@@ -49,29 +56,31 @@ export default function Calendar() {
             </div>
 
             {/* Timeline */}
-            <div className="relative flex-1 overflow-y-auto scrollbar-hide min-h-0">
-                {Array.from({length: 24}, (_, i) => (
-                    <div key={i} style={{ top: `${(i / 24) * 100}%` }}
-                         className="absolute w-full flex items-center gap-1">
-                        <span className="text-xs text-neutral-700 w-8 shrink-0">{String(i).padStart(2,'0')}</span>
-                        <div className="flex-1 h-px bg-neutral-800/50" />
-                    </div>
-                ))}
-
-                {/* Events */}
-                {events.filter(e => e.start.dateTime).map(event => {
-                    const startMin = timeToMinutes(event.start.dateTime);
-                    const endMin = timeToMinutes(event.end.dateTime);
-                    const top = (startMin / 1440) * 100;
-                    const height = ((endMin - startMin) / 1440) * 100;
-                    return (
-                        <div key={event.id}
-                             style={{ top: `${top}%`, height: `${height}%`, left: '2.5rem' }}
-                             className="absolute right-0 rounded px-1 text-xs">
-                            {event.summary}
+            <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-hide min-h-0">
+                <div className="relative" style={{ height: '1440px' }}>
+                    {Array.from({length: 24}, (_, i) => (
+                        <div key={i} style={{ top: `${i * 60}px` }}
+                             className="absolute w-full flex items-center gap-1">
+                            <span className="text-xs text-neutral-700 w-8 shrink-0">{String(i).padStart(2,'0')}</span>
+                            <div className="flex-1 h-px bg-neutral-800/50" />
                         </div>
-                    );
-                })}
+                    ))}
+
+                    {/* Events */}
+                    {events.filter(e => e.start.dateTime).map(event => {
+                        const startMin = timeToMinutes(event.start.dateTime);
+                        const endMin = timeToMinutes(event.end.dateTime);
+                        const top = (startMin / 1440) * 100;
+                        const height = ((endMin - startMin) / 1440) * 100;
+                        return (
+                            <div key={event.id}
+                                 style={{ top: `${top}%`, height: `${height}%`, left: '2.5rem' }}
+                                 className="absolute right-0 rounded px-1 text-xs">
+                                {event.summary}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
