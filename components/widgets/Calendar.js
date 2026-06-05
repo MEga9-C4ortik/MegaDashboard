@@ -1,4 +1,11 @@
 import { useRef, useState, useEffect } from "react";
+const COLORS = {
+    '1': '#7986cb', '2': '#33b679', '3': '#8e24aa',
+    '4': '#e67c73', '5': '#f6c026', '6': '#f5511d',
+    '7': '#039be5', '8': '#616161', '9': '#3f51b5',
+    '10': '#0b8043', '11': '#d60000',
+    default: '#4285f4'
+};
 
 export default function Calendar() {
     const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString("en-CA"));
@@ -71,7 +78,7 @@ export default function Calendar() {
 
             {/* Timeline */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-hide min-h-0">
-                <div className="relative" style={{ height: '1440px' }}>
+                <div className="relative" style={{ height: '1080px' }}>
                     {Array.from({length: 24}, (_, i) => (
                         <div key={i} style={{ top: `${i * 60}px` }}
                              className="absolute w-full flex items-center gap-1">
@@ -84,11 +91,17 @@ export default function Calendar() {
                     {events.filter(e => e.start.dateTime).map(event => {
                         const startMin = timeToMinutes(event.start.dateTime);
                         const endMin = timeToMinutes(event.end.dateTime);
-                        const top = (startMin / 1440) * 100;
-                        const height = ((endMin - startMin) / 1440) * 100;
+                        const top = startMin * 0.75;
+                        const height = ((endMin - startMin) * 0.75;
+                        const color = event.colorId ?? 'default';
                         return (
                             <div key={event.id}
-                                 style={{ top: `${top}%`, height: `${height}%`, left: '2.5rem' }}
+                                 style={{
+                                     top: `${top}%`,
+                                     height: `${height}%`,
+                                     left: '2.5rem',
+                                     color: color,
+                                }}
                                  className="absolute right-0 rounded px-1 text-xs">
                                 {event.summary}
                             </div>
