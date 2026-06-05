@@ -31,22 +31,47 @@ export default function Calendar() {
         setSelectedDate(date.toLocaleDateString("en-CA"));
     };
 
+    const timeToMinutes = (dateTimeStr) => {
+        const hours =  new Date(dateTimeStr).getHours();
+        const minutes =  new Date(dateTimeStr).getMinutes();
+        return hours * 60 + minutes;
+    }
+
     return (
         <div className="flex flex-col h-full w-full gap-2">
             {/* Header */}
             <div className="flex items-center justify-between shrink-0">
                 <button onClick={() => changeDay(-1)}>←</button>
-                <span onClick={() => setView(true)}>{selectedDate}</span>
+                <span onClick={() => setView(true)} className="text-sm text-neutral-200 font-medium cursor-pointer hover:text-white transition-colors">
+                    {new Date(selectedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                </span>
                 <button onClick={() => changeDay(+1)}>→</button>
             </div>
 
-            {/* Events */}
-            <div className="flex flex-col gap-1 overflow-y-auto">
-                {events.map(event => (
-                    <div key={event.id}>
-                        {event.summary}
+            {/* Timeline */}
+            <div className="relative flex-1 overflow-y-auto scrollbar-hide min-h-0">
+                {Array.from({length: 24}, (_, i) => (
+                    <div key={i} style={{ top: `${(i / 24) * 100}%` }}
+                         className="absolute w-full flex items-center gap-1">
+                        <span className="text-xs text-neutral-700 w-8 shrink-0">{String(i).padStart(2,'0')}</span>
+                        <div className="flex-1 h-px bg-neutral-800/50" />
                     </div>
                 ))}
+
+                {/* Events */}
+                {events.filter(e => e.start.dateTime).map(event => {
+                    const startMin = timeToMinutes(event.start.dateTime);
+                    const endMin = timeToMinutes(event.end.dateTime);
+                    const top = (startMin / 1440) * 100;
+                    const height = ((endMin - startMin) / 1440) * 100;
+                    return (
+                        <div key={event.id}
+                             style={{ top: `${top}%`, height: `${height}%`, left: '2.5rem' }}
+                             className="absolute right-0 rounded px-1 text-xs">
+                            {event.summary}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );
