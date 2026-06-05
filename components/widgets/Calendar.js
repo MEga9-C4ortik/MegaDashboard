@@ -43,9 +43,11 @@ export default function Calendar() {
             {/* Events */}
             <div className="flex flex-col gap-1 overflow-y-auto">
                 {events.map(event => (
-                    <div key={event.id}>
-                        {event.summary}
-                    </div>
+                    event.start === selectedDate ?
+                        <div key={event.id}>
+                            {event.summary}
+                        </div>
+                        : <div key={event.id}></div>
                 ))}
             </div>
         </div>
