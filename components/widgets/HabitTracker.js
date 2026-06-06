@@ -40,7 +40,7 @@ function HabitTracker() {
             // АНЧЕК — восстанавливаем стрик до чека
             newStreak = habit.previousStreak;
             newPreviousStreak = habit.previousStreak;
-            newMarkedForDate = previousPeriod;
+            newMarkedForDate = previousPeriod > 0 ? previousPeriod : null;
         } else if (habit.markedForDate === null && habit.streak > 0) {
             // РЕ-ЧЕК — анчекнул и снова чекнул в том же периоде
             newStreak = habit.previousStreak + 1;
