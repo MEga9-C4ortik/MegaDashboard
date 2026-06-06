@@ -89,7 +89,7 @@ export default function Calendar() {
                 <div className="relative" style={{ height: '1080px' }}>
                     {Array.from({length: 24}, (_, i) => (
                         <div key={i} style={{ top: `${i * 45}px` }}
-                             className="absolute w-full flex items-center gap-1">
+                             className="absolute w-full flex items-center gap-1 -translate-y-1/2">
                             <span className="text-xs text-neutral-700 w-8 shrink-0">{String(i).padStart(2,'0')}</span>
                             <div className="flex-1 h-px bg-neutral-800/50" />
                         </div>
@@ -102,6 +102,7 @@ export default function Calendar() {
                         const top = startMin * 0.75;
                         const height = (endMin - startMin) * 0.75;
                         const color = event.colorId ?? 'default';
+                        console.log(event.summary, startMin, top, 'px');
                         return (
                             <div key={event.id}
                                  style={{
