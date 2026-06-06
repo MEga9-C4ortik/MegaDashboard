@@ -13,7 +13,7 @@ function timeAgo (dateStr) {
 
 function getColour (count) {
     if (count === 0) return 'bg-neutral-800';
-    if (count <= 2) return 'bg-emerald-950';
+    if (count <= 2) return 'bg-emerald-900';
     if (count <= 5) return 'bg-emerald-800';
     if (count <= 9) return 'bg-emerald-600';
     return 'bg-emerald-400';

@@ -106,8 +106,8 @@ export default function Calendar() {
                         return (
                             <div key={event.id}
                                  style={{
-                                     top: `${top}%`,
-                                     height: `${height}%`,
+                                     top: top,
+                                     height: height,
                                      left: '2.5rem',
                                      backgroundColor: getEventColor(event) + '40', // 40 = 25% opacity
                                      borderLeft: `2px solid ${getEventColor(event)}`,
