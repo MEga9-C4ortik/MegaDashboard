@@ -13,6 +13,8 @@ const GCal_COLORS = {
     '11': '#d60000', // Tomato
 };
 
+const OFFSET = 10;
+
 export default function Calendar() {
     const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString("en-CA"));
     const [events, setEvents] = useState([]);
@@ -86,9 +88,9 @@ export default function Calendar() {
 
             {/* Timeline */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-hide min-h-0">
-                <div className="relative" style={{ height: '1080px' }}>
+                <div className="relative" style={{ height: `${1080 + OFFSET * 2}px` }}>
                     {Array.from({length: 24}, (_, i) => (
-                        <div key={i} style={{ top: `${i * 45}px` }}
+                        <div key={i} style={{ top: `${i * 45 + OFFSET}px` }}
                              className="absolute w-full flex items-center gap-1 -translate-y-1/2">
                             <span className="text-xs text-neutral-700 w-8 shrink-0">{String(i).padStart(2,'0')}</span>
                             <div className="flex-1 h-px bg-neutral-800/50" />
@@ -106,7 +108,7 @@ export default function Calendar() {
                         return (
                             <div key={event.id}
                                  style={{
-                                     top: `${top}px`,
+                                     top: `${top + OFFSET}px`,
                                      height: `${height}px`,
                                      left: '2.5rem',
                                      backgroundColor: getEventColor(event) + '40', // 40 = 25% opacity
