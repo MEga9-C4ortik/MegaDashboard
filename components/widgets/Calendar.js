@@ -18,6 +18,7 @@ const OFFSET = 10;
 export default function Calendar() {
     const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString("en-CA"));
     const [events, setEvents] = useState([]);
+    const [selectedEvent, setSelectedEvent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [view , setView] = useState(false);
     const cache = useRef({});
@@ -86,40 +87,54 @@ export default function Calendar() {
                 <button onClick={() => changeDay(+1)}>→</button>
             </div>
 
-            {/* Timeline */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-hide min-h-0">
-                <div className="relative" style={{ height: `${1080 + OFFSET * 2}px` }}>
-                    {Array.from({length: 24}, (_, i) => (
-                        <div key={i} style={{ top: `${i * 45 + OFFSET}px` }}
-                             className="absolute w-full flex items-center gap-1 -translate-y-1/2">
-                            <span className="text-xs text-neutral-700 w-8 shrink-0">{String(i).padStart(2,'0')}</span>
-                            <div className="flex-1 h-px bg-neutral-800/50" />
-                        </div>
-                    ))}
-
-                    {/* Events */}
-                    {events.filter(e => e.start.dateTime).map(event => {
-                        const startMin = timeToMinutes(event.start.dateTime);
-                        const endMin = timeToMinutes(event.end.dateTime);
-                        const top = startMin * 0.75;
-                        const height = (endMin - startMin) * 0.75;
-                        const color = event.colorId ?? 'default';
-                        console.log(event.summary, startMin, top, 'px');
-                        return (
-                            <div key={event.id}
-                                 style={{
-                                     top: `${top + OFFSET}px`,
-                                     height: `${height}px`,
-                                     left: '2.5rem',
-                                     backgroundColor: getEventColor(event) + '40', // 40 = 25% opacity
-                                     borderLeft: `5px solid ${getEventColor(event)}`,
-                                }}
-                                 className="absolute right-20 rounded px-1 text-xs">
-                                {event.summary}
+            <div className="flex flex-1 gap-2 min-h-0">
+                {/* Timeline */}
+                <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-hide min-h-0">
+                    <div className="relative" style={{ height: `${1080 + OFFSET * 2}px` }}>
+                        {Array.from({length: 24}, (_, i) => (
+                            <div key={i} style={{ top: `${i * 45 + OFFSET}px` }}
+                                 className="absolute w-full flex items-center gap-1 -translate-y-1/2">
+                                <span className="text-xs text-neutral-700 w-8 shrink-0">{String(i).padStart(2,'0')}</span>
+                                <div className="flex-1 h-px bg-neutral-800/50" />
                             </div>
-                        );
-                    })}
+                        ))}
+
+                        {/* Events */}
+                        {events.filter(e => e.start.dateTime).map(event => {
+                            const startMin = timeToMinutes(event.start.dateTime);
+                            const endMin = timeToMinutes(event.end.dateTime);
+                            const top = startMin * 0.75;
+                            const height = (endMin - startMin) * 0.75;
+                            const color = event.colorId ?? 'default';
+                            console.log(event.summary, startMin, top, 'px');
+                            return (
+                                <div key={event.id}
+                                     style={{
+                                         top: `${top + OFFSET}px`,
+                                         height: `${height}px`,
+                                         left: '2.5rem',
+                                         backgroundColor: getEventColor(event) + '40', // 40 = 25% opacity
+                                         borderLeft: `5px solid ${getEventColor(event)}`,
+                                     }}
+                                     className="absolute right-20 rounded px-1 text-xs"
+                                     onClick={() => {setSelectedEvent(event)}}>
+                                    {event.summary}
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
+
+                {selectedEvent && (
+                    <div className="w-32 shrink-0 flex flex-col gap-1 text-xs pt-2">
+                        <span className="text-neutral-200 font-medium">{selectedEvent.summary}</span>
+                        <span className="text-neutral-500">{selectedEvent.location}</span>
+                        <a href={selectedEvent.htmlLink} target="_blank"
+                           className="text-blue-400 hover:text-blue-300 mt-auto">
+                            Open →
+                        </a>
+                    </div>
+                )}
             </div>
         </div>
     );
