@@ -57,6 +57,12 @@ export default function Calendar() {
         }
     }, []);
 
+    useEffect(() => {
+        const close = () => setSelectedEvent(null);
+        window.addEventListener('click', close);
+        return () => window.removeEventListener('click', close);
+    }, []);
+
     const changeDay = (delta) => {
         const date = new Date(selectedDate);
         date.setDate(date.getDate() + delta);
