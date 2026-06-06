@@ -62,7 +62,6 @@ export default function Calendar() {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            e.preventDefault();
             const tag = document.activeElement?.tagName;
             if (tag === 'INPUT' || tag === 'TEXTAREA') return;
 
@@ -110,9 +109,9 @@ export default function Calendar() {
                                      height: height,
                                      left: '2.5rem',
                                      backgroundColor: getEventColor(event) + '40', // 40 = 25% opacity
-                                     borderLeft: `2px solid ${getEventColor(event)}`,
+                                     borderLeft: `5px solid ${getEventColor(event)}`,
                                 }}
-                                 className="absolute right-0 rounded px-1 text-xs">
+                                 className="absolute right-20 rounded px-1 text-xs">
                                 {event.summary}
                             </div>
                         );
