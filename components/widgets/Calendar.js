@@ -76,6 +76,11 @@ export default function Calendar() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [selectedDate]);
 
+    const toTimeStr = (dateTimeStr) => {
+        const d = new Date(dateTimeStr);
+        return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+
     return (
         <div className="flex flex-col h-full w-full gap-2">
             {/* Header */}
@@ -112,12 +117,17 @@ export default function Calendar() {
                                      style={{
                                          top: `${top + OFFSET}px`,
                                          height: `${height}px`,
+                                         right: 0,
                                          left: '2.5rem',
                                          backgroundColor: getEventColor(event) + '40', // 40 = 25% opacity
                                          borderLeft: `5px solid ${getEventColor(event)}`,
                                      }}
-                                     className="absolute right-20 rounded px-1 text-xs"
-                                     onClick={() => {setSelectedEvent(event)}}>
+                                     className="absolute rounded px-1 text-xs cursor-pointer"
+                                     onClick={(e) => {
+                                         e.stopPropagation();
+                                         setSelectedEvent(selectedEvent?.id === event.id ? null : event);
+                                     }}
+                                >
                                     {event.summary}
                                 </div>
                             );
@@ -127,8 +137,18 @@ export default function Calendar() {
 
                 {selectedEvent && (
                     <div className="w-32 shrink-0 flex flex-col gap-1 text-xs pt-2">
-                        <span className="text-neutral-200 font-medium">{selectedEvent.summary}</span>
-                        <span className="text-neutral-500">{selectedEvent.location}</span>
+                        <span className="text-sm text-neutral-200 font-medium">
+                            {selectedEvent.summary}
+                        </span>
+                        <span className="text-sm text-neutral-200 font-medium">
+                            {toTimeStr(selectedEvent.start.dateTime)} – {toTimeStr(selectedEvent.end.dateTime)}
+                        </span>
+                        {selectedEvent.location && (
+                            <span className="text-sm text-neutral-300">Location: {selectedEvent.location}</span>
+                        )}
+                        {selectedEvent.description && (
+                            <span className="text-neutral-600 text-xs leading-tight">{selectedEvent.description}</span>
+                        )}
                         <a href={selectedEvent.htmlLink} target="_blank"
                            className="text-blue-400 hover:text-blue-300 mt-auto">
                             Open →
