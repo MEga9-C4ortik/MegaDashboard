@@ -17,7 +17,8 @@ export async function GET(request) {
     const toTime = (unix) => new Date(unix * 1000).toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
-        hour12: false
+        hour12: false,
+        timeZone: 'Asia/Kuala_Lumpur'
     });
 
     const data = await res.json();
