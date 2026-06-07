@@ -98,6 +98,20 @@ export default function Calendar() {
                 <button onClick={() => changeDay(+1)}>→</button>
             </div>
 
+            {/* All day events */}
+            <div className="flex flex-wrap gap-1 shrink-0">
+                {events.filter(e => e.start.date).map(event => (
+                    <div key={event.id}
+                         style={{
+                             backgroundColor: getEventColor(event) + '30',
+                             borderColor: getEventColor(event)
+                         }}
+                         className="text-xs px-2 py-0.5 w-full text-center rounded-full border text-neutral-200 truncate">
+                        {event.summary}
+                    </div>
+                ))}
+            </div>
+
             <div className="flex flex-1 gap-2 min-h-0">
                 {/* Timeline */}
                 <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-hide min-h-0">
@@ -105,7 +119,7 @@ export default function Calendar() {
                         {Array.from({length: 24}, (_, i) => (
                             <div key={i} style={{ top: `${i * 45 + OFFSET}px` }}
                                  className="absolute w-full flex items-center gap-1 -translate-y-1/2">
-                                <span className="text-xs text-neutral-700 w-8 shrink-0">{String(i).padStart(2,'0')}</span>
+                                <span className="text-xs text-neutral-600 w-8 shrink-0">{String(i).padStart(2,'0')}</span>
                                 <div className="flex-1 h-px bg-neutral-800/50" />
                             </div>
                         ))}
@@ -117,7 +131,6 @@ export default function Calendar() {
                             const top = startMin * 0.75;
                             const height = (endMin - startMin) * 0.75;
                             const color = event.colorId ?? 'default';
-                            console.log(event.summary, startMin, top, 'px');
                             return (
                                 <div key={event.id}
                                      style={{
