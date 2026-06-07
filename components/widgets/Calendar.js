@@ -20,7 +20,6 @@ export default function Calendar() {
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [view , setView] = useState(false);
     const cache = useRef({});
     const scrollRef = useRef(null);
 
@@ -92,9 +91,9 @@ export default function Calendar() {
             {/* Header */}
             <div className="flex items-center justify-between shrink-0">
                 <button onClick={() => changeDay(-1)}>←</button>
-                <span onClick={() => setView(true)} className="text-sm text-neutral-200 font-medium cursor-pointer hover:text-white transition-colors">
+                <a href="https://calendar.google.com/calendar" className="text-sm text-neutral-200 font-medium cursor-pointer hover:text-white transition-colors">
                     {new Date(selectedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-                </span>
+                </a>
                 <button onClick={() => changeDay(+1)}>→</button>
             </div>
 
