@@ -106,7 +106,7 @@ export default function Calendar() {
                              backgroundColor: getEventColor(event) + '30',
                              borderColor: getEventColor(event)
                          }}
-                         className="text-xs px-2 py-0.5 w-full text-center rounded-full border text-neutral-200 truncate">
+                         className="text-xs px-2 py-0.5 w-full text-center rounded-md border text-neutral-200 truncate">
                         {event.summary}
                     </div>
                 ))}
@@ -130,7 +130,6 @@ export default function Calendar() {
                             const endMin = timeToMinutes(event.end.dateTime);
                             const top = startMin * 0.75;
                             const height = (endMin - startMin) * 0.75;
-                            const color = event.colorId ?? 'default';
                             return (
                                 <div key={event.id}
                                      style={{
