@@ -1,4 +1,5 @@
-import { useRef, useState, useEffect } from "react";
+import {useEffect, useRef, useState} from "react";
+
 const GCal_COLORS = {
     '1': '#7986cb',  // Lavender
     '2': '#33b679',  // Sage
