@@ -6,8 +6,11 @@ export default function Study(props) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        subjects.map(subject => {
-            
-        });
-    }, []);
+        setLoading(true);
+        fetch('api/study')
+            .then(res => res.json())
+            .then(setSubjects);
+    }, [subjects]);
+
+
 }
