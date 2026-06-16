@@ -7,10 +7,12 @@ export default function Study(props) {
 
     useEffect(() => {
         setLoading(true);
+
         fetch('/api/study')
             .then(res => res.json())
-            .then(setSubjects)
-            .then(() => setLoading(false))
+            .then(data => setSubjects(data))
+            .catch(error => console.error(error))
+            .finally(() => setLoading(false));
     }, []);
 
     if (loading) return (
