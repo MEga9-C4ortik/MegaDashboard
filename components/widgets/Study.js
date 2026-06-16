@@ -3,13 +3,14 @@ import {useEffect, useRef, useState} from "react";
 
 export default function Study(props) {
     const [subjects, setSubjects] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
-        fetch('api/study')
+        fetch('/api/study')
             .then(res => res.json())
-            .then(setSubjects);
+            .then(setSubjects)
+            .then(setLoading(false))
     }, [subjects]);
 
     if (loading) return (
