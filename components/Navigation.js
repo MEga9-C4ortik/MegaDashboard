@@ -4,7 +4,7 @@ import {useEffect} from "react";
 
 const pages  = [['/', '/stats', '/health']]
 
-export default function Navigation(page) {
+export default function Navigation() {
     const [index, setIndex] = React.useState(0);
 
     useEffect(() => {
@@ -19,12 +19,13 @@ export default function Navigation(page) {
                 setIndex(i => (i + 1) % pages.length);
             }
             if (e.code === 'Digit1' || e.code === 'Digit2' || e.code === 'Digit3') {
-
+                setIndex(e.code[5] - 1);
             }
 
+            window.local.href = pages[index];
         }
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [page]);
+    }, [pages.length]);
 }
