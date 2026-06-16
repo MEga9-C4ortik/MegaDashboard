@@ -10,7 +10,7 @@ export default function Study(props) {
         fetch('/api/study')
             .then(res => res.json())
             .then(setSubjects)
-            .then(setLoading(false))
+            .then(() => setLoading(false))
     }, []);
 
     if (loading) return (

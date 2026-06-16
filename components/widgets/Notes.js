@@ -36,10 +36,10 @@ function Notes() {
             const tag = document.activeElement?.tagName;
             if (tag === 'INPUT' || tag === 'TEXTAREA') return;
 
-            if (e.key === 'ArrowLeft') {
+            if (e.code === 'KeyZ') {
                 setCurrentIndex(i => (i - 1 + categories.length) % categories.length);
             }
-            if (e.key === 'ArrowRight') {
+            if (e.code === 'KeyX') {
                 setCurrentIndex(i => (i + 1) % categories.length);
             }
         };
