@@ -11,7 +11,7 @@ export default function Study(props) {
             .then(res => res.json())
             .then(setSubjects)
             .then(setLoading(false))
-    }, [subjects]);
+    }, []);
 
     if (loading) return (
         <div className="animate-pulse flex flex-col gap-1.5 w-full">
