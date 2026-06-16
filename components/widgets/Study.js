@@ -26,8 +26,10 @@ export default function Study(props) {
     );
 
     return (
-        <div>
-            loading
+        <div className="flex flex-col h-full w-full">
+            <div className="flex flex-col gap-2 shrink-0">
+                Study
+            </div>
         </div>
     );
 }

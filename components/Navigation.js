@@ -1,11 +1,11 @@
 'use client'
 
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
-const pages  = [['/', '/stats', '/health']]
+const pages  = ['/', '/stats', '/health'];
 
 export default function Navigation() {
-    const [index, setIndex] = React.useState(0);
+    const [index, setIndex] = useState(0);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -13,7 +13,7 @@ export default function Navigation() {
             if (tag === 'INPUT' || tag === 'TEXTAREA') return;
 
             if (e.code === 'ArrowLeft') {
-                setIndex(i => (i - 1 + [pages].length) % [pages].length);
+                setIndex(i => (i - 1 + pages.length) % pages.length);
             }
             if (e.code === 'ArrowRight' || e.code === 'Tab') {
                 setIndex(i => (i + 1) % pages.length);
@@ -22,7 +22,7 @@ export default function Navigation() {
                 setIndex(e.code[5] - 1);
             }
 
-            window.local.href = pages[index];
+            window.location.href = pages[index];
         }
 
         window.addEventListener('keydown', handleKeyDown);
