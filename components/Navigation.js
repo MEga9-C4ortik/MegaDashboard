@@ -1,28 +1,33 @@
 'use client'
 
 import {useEffect, useState} from "react";
+import {usePathname} from "next/navigation";
+import {useRouter} from "next/router";
 
-const pages  = ['/', '/stats', '/health'];
+const PAGES  = ['/', '/stats', '/health'];
 
 export default function Navigation() {
-    const [index, setIndex] = useState(0);
+    const pathname = usePathname();
+    const router = useRouter();
 
     useEffect(() => {
         const handleKeyDown = (e) => {
             const tag = document.activeElement?.tagName;
+
+            const currentIdx = PAGES.indexOf(pathname);
             if (tag === 'INPUT' || tag === 'TEXTAREA') return;
 
             if (e.code === 'ArrowLeft') {
-                setIndex(i => (i - 1 + pages.length) % pages.length);
+                const newIdx = (currentIdx - 1 + PAGES.length) % PAGES.length;
             }
             if (e.code === 'ArrowRight' || e.code === 'Tab') {
-                setIndex(i => (i + 1) % pages.length);
+                const newIdx = (currentIdx + 1) % PAGES.length;
             }
             if (e.code === 'Digit1' || e.code === 'Digit2' || e.code === 'Digit3') {
-                setIndex(e.code[5] - 1);
+                const newIdx = (e.code[5] - 1);
             }
 
-            window.location.href = pages[index];
+            router.push[PAGES[newIndex]];
         }
 
         window.addEventListener('keydown', handleKeyDown);
