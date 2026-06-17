@@ -1,9 +1,24 @@
 'use client'
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 
-export default function Study(props) {
+export default function Study() {
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const getDaysLeft = (deadline) => {
+       return Math.ceil((new Date(deadline) - new Date()) / 86400000);
+    };
+
+    const getColor = (days) => {
+        if (days <= 0) return 'bg-red-400';
+        if (days <= 3) return 'bg-red-700';
+        if (days <= 5) return 'bg-orange-800';
+        if (days <= 7) return 'bg-orange-400';
+        if (days <= 10) return 'bg-green-600';
+        if (days <= 14) return 'bg-green-200';
+        if (days > 14) return 'bg-neutral-700';
+        return 'bg-neutral-900';
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -29,12 +44,29 @@ export default function Study(props) {
 
     return (
         <div className="flex flex-col h-full w-full">
-            <div className="flex flex-col gap-2 shrink-0">
+            <div className="flex flex-col h-full w-full gap-2 overflow-y-auto scrollbar-hide">
                 {subjects.map((subject) => (
-                    <div className="h-6 w-6 flex items-center gap-2"
+                    <div className="w-full flex items-center gap-2"
                          key={subject.id}
                     >
-                        
+                        <div className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-800">
+                            <div className="w-2 h-2 rounded-full shrink-0">
+
+                            </div>
+                            <div className="flex flex-col flex-1 min-w-0">
+                                <p className="text-sm text-neutral-200 truncate">
+                                    {subject.name}
+                                </p>
+                                {subject.tasks &&
+                                    <p className="text-xs text-neutral-500 truncate">
+                                        {subject.tasks}
+                                    </p>
+                                }
+                            </div>
+                            <div className="flex flex-col items-end gap-0.5 shrink-0">
+                                {getDaysLeft(subject.deadline)}
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>
