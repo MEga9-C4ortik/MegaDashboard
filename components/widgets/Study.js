@@ -30,7 +30,13 @@ export default function Study(props) {
     return (
         <div className="flex flex-col h-full w-full">
             <div className="flex flex-col gap-2 shrink-0">
-                Study
+                {subjects.map((subject) => (
+                    <div className="h-6 w-6 flex items-center gap-2"
+                         key={subject.id}
+                    >
+                        
+                    </div>
+                ))}
             </div>
         </div>
     );
