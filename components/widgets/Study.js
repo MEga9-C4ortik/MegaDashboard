@@ -50,9 +50,7 @@ export default function Study() {
                          key={subject.id}
                     >
                         <div className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-800">
-                            <div className="w-2 h-2 rounded-full shrink-0">
-
-                            </div>
+                            <div className={`w-2 h-2 rounded-full shrink-0 ${getColor(getDaysLeft(subject.deadline))}`} />
                             <div className="flex flex-col flex-1 min-w-0">
                                 <p className="text-sm text-neutral-200 truncate">
                                     {subject.name}
