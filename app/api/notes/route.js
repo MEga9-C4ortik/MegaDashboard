@@ -13,7 +13,7 @@ export async function GET(request) {
             .filter(b => b.type === "bulleted_list_item")
             .map(b => ({
                 id: b.id,
-                text: b.bulleted_list_item.rich_text[0].plain_text
+                text: b.bulleted_list_item.rich_text[0].plain_text ?? ''
             }));
         return Response.json(bullets);
     } else {

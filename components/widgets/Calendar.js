@@ -1,3 +1,4 @@
+'use client'
 import {useEffect, useRef, useState} from "react";
 
 const GCal_COLORS = {
@@ -92,7 +93,7 @@ export default function Calendar() {
             {/* Header */}
             <div className="flex items-center justify-between shrink-0">
                 <button onClick={() => changeDay(-1)}>←</button>
-                <a href="https://calendar.google.com/calendar" className="text-sm text-neutral-200 font-medium cursor-pointer hover:text-white transition-colors">
+                <a href="https://calendar.google.com/calendar/u/1/" className="text-sm text-neutral-200 font-medium cursor-pointer hover:text-white transition-colors">
                     {new Date(selectedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                 </a>
                 <button onClick={() => changeDay(+1)}>→</button>
