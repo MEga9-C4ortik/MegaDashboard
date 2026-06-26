@@ -1,4 +1,5 @@
 import Study from '../../components/widgets/Study';
+import Hobby from '../../components/widgets/Hobbies';
 
 export default function Page() {
     return (
@@ -11,8 +12,8 @@ export default function Page() {
             <div className="bg-neutral-900 rounded-xl p-3 border border-neutral-800/50 flex flex-col min-h-0 overflow-hidden">
                 <Study />
             </div>
-            <div className="bg-neutral-900 rounded-xl p-3 border border-neutral-800/50 flex flex-col min-h-0">
-                <span className="text-xs text-neutral-700 uppercase tracking-widest">Hobby</span>
+            <div className="bg-neutral-900 rounded-xl p-3 border border-neutral-800/50 flex flex-col min-h-0 overflow-hidden">
+                <Hobby />
             </div>
             <div className="bg-neutral-900 rounded-xl p-3 border border-neutral-800/50 col-span-2">
                 <span className="text-xs text-neutral-700 uppercase tracking-widest">LeetCode</span>
