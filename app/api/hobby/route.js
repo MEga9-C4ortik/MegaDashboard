@@ -4,6 +4,12 @@ export async function GET () {
     try {
         const response = await notion.databases.query({
             database_id: process.env.NOTION_HOBBIES,
+            sorts: [
+                {
+                    property: 'Deadline',
+                    direction: 'ascending'
+                }
+            ]
         });
         const projects = response.results;
         if (projects.length <= 0) return Response.json([], {status: 200});
