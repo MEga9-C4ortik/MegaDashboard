@@ -1,5 +1,5 @@
 'use client'
-import {useState, useRef, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 
 function timeAgo (dateStr) {
     const diff = Date.now() - new Date(dateStr).getTime();
@@ -39,9 +39,10 @@ export default function LeetCode() {
 
     return (
         <div className="flex h-full gap-4 items-center">
-            {/* 1. Заголовок + стрик */}
             <div className="flex flex-col shrink-0">
-                ...
+                <span className="">
+                    {data.streak} streak | {data.totalActiveDays} solved
+                </span>
             </div>
 
             {/* 2. Heatmap */}
