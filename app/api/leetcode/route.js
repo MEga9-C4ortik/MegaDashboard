@@ -2,7 +2,6 @@ export async function GET() {
     const username = process.env.LEETCODE_USERNAME;
     const year = new Date().getFullYear();
 
-    // Хелпер чтобы не повторять fetch + headers каждый раз
     const gql = (query, variables = {}) =>
         fetch('https://leetcode.com/graphql', {
             method: 'POST',
@@ -10,7 +9,6 @@ export async function GET() {
             body: JSON.stringify({ query, variables })
         }).then(res => res.json());
 
-    // Три запроса параллельно
     const [calendarData, statsData, recentData] = await Promise.all([
         gql(`
             query userProfileCalendar($username: String!, $year: Int) {
@@ -53,24 +51,22 @@ export async function GET() {
     ]);
 
     // --- CALENDAR ---
-    // submissionCalendar это строка — парсим в объект { "timestamp": count }
     const calendar = JSON.parse(
         calendarData.data.matchedUser.userCalendar.submissionCalendar
     );
 
-    // Конвертируем timestamps в Set из дат "YYYY-MM-DD" для быстрого поиска
+    // CONVERT TO YYYY-MM-DD
     const activeDates = new Set(
         Object.keys(calendar).map(ts =>
             new Date(parseInt(ts) * 1000).toISOString().split('T')[0]
         )
     );
 
-    // --- ТЕКУЩИЙ СТРИК (считаем вручную) ---
-    // LeetCode в API даёт max streak, а не текущий — считаем сами
+    // --- CURRENT STREAK ---
     const todayStr = new Date().toISOString().split('T')[0];
     const yesterdayStr = new Date(Date.now() - 86400000).toISOString().split('T')[0];
 
-    // Если сегодня ещё не решал — начинаем со вчера
+    // STREAK LOSS
     let checkStr = activeDates.has(todayStr) ? todayStr : yesterdayStr;
     let checkDate = new Date(checkStr + 'T00:00:00Z');
     let streak = 0;
@@ -81,13 +77,12 @@ export async function GET() {
         checkStr = checkDate.toISOString().split('T')[0];
     }
 
-    // --- HEATMAP НЕДЕЛИ (последние 20 недель) ---
-    // Строим массив недель как у GitHub: [{date, count}, ...][]
+    // --- HEATMAP CALENDAR ---
     const weeks = [];
     const endDate = new Date();
     endDate.setUTCHours(0, 0, 0, 0);
 
-    // Откатываемся на 20 недель назад и выравниваем на воскресенье
+    // 20 weeks
     const startDate = new Date(endDate);
     startDate.setUTCDate(startDate.getUTCDate() - 20 * 7);
     startDate.setUTCDate(startDate.getUTCDate() - startDate.getUTCDay());
@@ -113,7 +108,7 @@ export async function GET() {
     }
     if (week.length > 0) weeks.push(week);
 
-    // --- СТАТЫ Easy/Medium/Hard ---
+    // --- Easy/Medium/Hard ---
     const acStats  = statsData.data.matchedUser.submitStats.acSubmissionNum;
     const totals   = statsData.data.allQuestionsCount;
 
@@ -125,7 +120,7 @@ export async function GET() {
         hard:   { solved: find(acStats, 'Hard'),   total: find(totals, 'Hard') },
     };
 
-    // --- ПОСЛЕДНИЕ РЕШЁННЫЕ ---
+    // --- LAST SOLVED ---
     const recent = recentData.data.recentAcSubmissionList.map(s => ({
         id: s.id,
         title: s.title,

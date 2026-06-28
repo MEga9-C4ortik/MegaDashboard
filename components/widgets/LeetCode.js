@@ -39,18 +39,19 @@ export default function LeetCode() {
 
     return (
         <div className="flex h-full gap-4 items-center">
+            {/* Streak and Header */}
             <div className="flex flex-col shrink-0">
                 <span className="">
                     {data.streak} streak | {data.totalActiveDays} solved
                 </span>
             </div>
 
-            {/* 2. Heatmap */}
+            {/* Heatmap */}
             <div className="flex gap-0.5 shrink-0">
                 ...
             </div>
 
-            {/* 3. Статы */}
+            {/* Stats */}
             <div className="flex flex-col shrink-0 gap-1">
                 <div className="flex flex-col shrink-0">
                     <span className="text-green-400">
@@ -65,9 +66,13 @@ export default function LeetCode() {
                 </div>
             </div>
 
-            {/* 4. Последние задачи */}
+            {/* recent solved problems */}
             <div className="flex flex-col flex-1 min-w-0 gap-0.5">
-                ...
+                {data.recent.map(s => (
+                    <a key={s.id} className="flex items-center gap-1" href={`https://leetcode.com/problems/${s.slug}`} >
+                        {s.title} {timeAgo(s.date)}
+                    </a>
+                ))}
             </div>
         </div>
     );
