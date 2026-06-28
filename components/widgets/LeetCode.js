@@ -8,7 +8,7 @@ function timeAgo (dateStr) {
     const days = Math.floor(diff / 86400000);
     if (minutes < 60) return `${minutes}m ago`;
     if (hours < 24) return `${hours}h ago`;
-    return `${days}days ago`;
+    return `${days} days ago`;
 }
 
 function getColour (count) {
@@ -21,6 +21,7 @@ function getColour (count) {
 
 export default function LeetCode() {
     const [data, setData] = useState(null);
+    const [hoverDay, setHoverDay] = useState(null);
 
     useEffect(() => {
         fetch('/api/leetcode')
@@ -41,14 +42,31 @@ export default function LeetCode() {
         <div className="flex h-full gap-4 items-center">
             {/* Streak and Header */}
             <div className="flex flex-col shrink-0">
+                <a className="font-bold text-xl leading-tight" href="https://leetcode.com/u/mega_9/">
+                    LEETCODE
+                </a>
                 <span className="">
-                    {data.streak} streak | {data.totalActiveDays} solved
+                    {data.streak} streak {data.totalActiveDays} days active
                 </span>
             </div>
 
             {/* Heatmap */}
-            <div className="flex gap-0.5 shrink-0">
-                ...
+            <div className="flex gap-0.5 shrink-0 overflow-x-auto scrollbar-hide">
+                {data.weeks.map((week, wi) => (
+                    <div key={wi} className="flex flex-col gap-0.5">
+                        {week.map((day, di) => (
+                            <div
+                                key={day.date}
+                                className={`w-2.5 h-2.5 rounded-sm cursor-pointer
+                                    transition-opacity hover:opacity-70
+                                    ${getColour(day.count)}`}
+                                onClick={() => setHoverDay(
+                                    hoverDay?.date === day.date ? null : day
+                                )}
+                            />
+                        ))}
+                    </div>
+                ))}
             </div>
 
             {/* Stats */}
@@ -62,6 +80,9 @@ export default function LeetCode() {
                     </span>
                     <span className="text-red-400">
                         {data.stats.hard.solved}/{data.stats.hard.total}
+                    </span>
+                    <span className="text-neutral-200">
+                        {data.stats.easy.solved + data.stats.medium.solved + data.stats.hard.solved}/{data.stats.easy.total + data.stats.medium.total + data.stats.hard.total}
                     </span>
                 </div>
             </div>
