@@ -52,7 +52,17 @@ export default function LeetCode() {
 
             {/* 3. Статы */}
             <div className="flex flex-col shrink-0 gap-1">
-                ...
+                <div className="flex flex-col shrink-0">
+                    <span className="text-green-400">
+                        {data.stats.easy.solved}/{data.stats.easy.total}
+                    </span>
+                    <span className="text-yellow-400">
+                        {data.stats.medium.solved}/{data.stats.medium.total}
+                    </span>
+                    <span className="text-red-400">
+                        {data.stats.hard.solved}/{data.stats.hard.total}
+                    </span>
+                </div>
             </div>
 
             {/* 4. Последние задачи */}
