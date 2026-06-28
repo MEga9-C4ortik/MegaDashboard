@@ -1,5 +1,6 @@
 import Study from '../../components/widgets/Study';
 import Hobby from '../../components/widgets/Hobbies';
+import LeetCode from '../../components/widgets/LeetCode';
 
 export default function Page() {
     return (
@@ -16,7 +17,7 @@ export default function Page() {
                 <Hobby />
             </div>
             <div className="bg-neutral-900 rounded-xl p-3 border border-neutral-800/50 col-span-2">
-                <span className="text-xs text-neutral-700 uppercase tracking-widest">LeetCode</span>
+                <LeetCode />
             </div>
         </main>
     );

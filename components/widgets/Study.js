@@ -95,10 +95,8 @@ export default function Study() {
                             key={subject.id}
                             className="flex items-start gap-3 px-2 py-2.5 rounded-lg hover:bg-neutral-800/40 transition-colors"
                         >
-                            {/* Цветная точка */}
                             <div className={`w-2 h-2 rounded-full shrink-0 mt-1.5 ${getDotColor(days)}`} />
 
-                            {/* Название + задача + статус */}
                             <div className="flex flex-col flex-1 min-w-0">
                                 <p className="text-sm text-neutral-200 font-medium truncate">
                                     {subject.name}
@@ -115,7 +113,6 @@ export default function Study() {
                                 )}
                             </div>
 
-                            {/* Дни + дата */}
                             <div className="flex flex-col items-end shrink-0">
                                 <span className={`text-xs font-medium tabular-nums ${getTextColor(days)}`}>
                                     {formatDays(days)}
