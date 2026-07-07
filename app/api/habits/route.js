@@ -26,7 +26,6 @@ export async function GET(request) {
     const currentPeriod = searchParams.get('current') || getCurrentPeriod();
     const previousPeriod = searchParams.get('previous') || getPreviousPeriod();
 
-    // сбрасываем стрики для пропущенных привычек
     const toReset = habits.filter(h =>
         h.streak > 0 &&
         h.markedForDate !== null &&
