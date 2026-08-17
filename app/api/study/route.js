@@ -25,7 +25,7 @@ export async function GET () {
                 id: subject.id,
                 url: subject.url,
                 name: subject.properties.Subject.title?.[0].plain_text,
-                deadline: subject.properties.Deadline.date.start,
+                deadline: subject.properties.Deadline.date?.start,
                 tasks: subject.properties.Tasks.rich_text[0]?.plain_text,
                 description: subject.properties.Description.rich_text[0]?.plain_text,
                 status: subject.properties.Status.status.name,

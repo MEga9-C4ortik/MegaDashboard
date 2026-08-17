@@ -19,7 +19,7 @@ export async function GET() {
                                 }
                             }
                         }
-                        repositories(first: 10, orderBy: {field: PUSHED_AT, direction: DESC}) {
+                        repositories(first: 100, orderBy: {field: PUSHED_AT, direction: DESC}) {
                             nodes {
                                 name
                                 defaultBranchRef {
