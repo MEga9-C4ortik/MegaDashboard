@@ -37,13 +37,11 @@ export default function Clock() {
 
     return (
         <div className="flex flex-col justify-center gap-0.5 w-full">
-
-            {/* Ряд 1 — дата + неделя */}
-            <div className="flex items-baseline justify-between">
+            <div className="flex items-baseline p justify-between">
                 <span className="text-xs text-neutral-100 font-medium tracking-widest uppercase">
                     {now.toLocaleDateString("en-US", {
                         weekday: "short",
-                        month: "long",
+                        month: "short",
                         day: "numeric",
                         year: "numeric"
                     }).replaceAll(",", " ")}
